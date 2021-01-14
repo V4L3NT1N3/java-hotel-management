@@ -8,7 +8,6 @@ package hotelmanagementsystem;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Startup {
@@ -84,32 +83,16 @@ public class Startup {
         return null;
     }
 
-//    static void enumerateBookings() {
-//        String currentDirectory = System.getProperty("user.dir");
-//
-//        // Enumerate all files in directory
-//        File folder = new File(currentDirectory + "/bookinglist/");
-//        File[] listOfFiles = folder.listFiles();
-//
-//        for (int i = 0; i < listOfFiles.length; i++) {
-//            if (listOfFiles[i].isFile()) {
-//                System.out.println(currentDirectory + listOfFiles[i].getName());
-//            } else if (listOfFiles[i].isDirectory()) {
-//                // Ignore directories
-//            }
-//        }
-//    }
-
     public static String[] enumerateBookings() {
         try {
             ArrayList<String> bookingDirectoryList = new ArrayList<String>();
-
             String currentDirectory = System.getProperty("user.dir");
 
             // Enumerate all files in directory
             File folder = new File(currentDirectory + "/bookinglist/");
             File[] listOfFiles = folder.listFiles();
 
+            // Loop to add each file name to ArrayList
             for (int i = 0; i < listOfFiles.length; i++) {
                 if (listOfFiles[i].isFile()) {
                     bookingDirectoryList.add(currentDirectory + "/bookinglist/" + listOfFiles[i].getName());
@@ -118,6 +101,7 @@ public class Startup {
                 }
             }
             
+            // Converting ArrayList to Array 
             String[] bookingDirectoryArray = new String[bookingDirectoryList.size()];
             bookingDirectoryArray = bookingDirectoryList.toArray(bookingDirectoryArray);
     

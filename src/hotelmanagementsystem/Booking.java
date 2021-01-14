@@ -5,10 +5,12 @@
  */
 package hotelmanagementsystem;
 
-import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Booking {
 
@@ -68,7 +70,7 @@ public class Booking {
     public void setRoomNumber(String room_number) {
         this.room_number = room_number;
     }
-    
+
     public String getCheckIn() {
         return checkIn;
     }
@@ -76,7 +78,7 @@ public class Booking {
     public void setCheckIn(String checkIn) {
         this.checkIn = checkIn;
     }
-    
+
     public String getCheckOut() {
         return checkOut;
     }
@@ -86,9 +88,6 @@ public class Booking {
     }
 
     public void bookRoom() {
-        
-        // Check for booking list folder existence
-        checkBookingDirectory();
 
         // Create new booking file
         try {
@@ -113,4 +112,34 @@ public class Booking {
             e.printStackTrace();
         }
     }
+
+    public static int[] convertIntegers(List<Integer> integers) {
+        int[] ret = new int[integers.size()];
+        Iterator<Integer> iterator = integers.iterator();
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = iterator.next().intValue();
+        }
+        return ret;
+    }
+
+    public static int[] daysToInt(int checkIn, int checkOut) {
+
+        // Conversion of days to corresponding int values 
+        List<Integer> bookedDaysArray = new ArrayList<Integer>();
+
+        // Add booked days to ArrayList 
+        if (checkIn >= checkOut) {
+            bookedDaysArray.add(checkIn);
+        } else {
+            // Looping to fill in missing days in between a range 
+            do {
+                bookedDaysArray.add(checkIn);
+                checkIn++;
+            } while (checkIn <= checkOut);
+        }
+        
+        int[] converted = convertIntegers(bookedDaysArray);
+        return converted;
+    }
+
 }

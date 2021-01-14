@@ -5,14 +5,13 @@
  */
 package hotelmanagementsystem;
 
+import static hotelmanagementsystem.Booking.daysToInt;
 import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import static hotelmanagementsystem.Startup.enumerateBookings;
 import static hotelmanagementsystem.Startup.readBooking;
 import java.awt.CardLayout;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
@@ -26,23 +25,6 @@ public class HomeDashboard extends javax.swing.JFrame {
         initComponents();
 
         cardLayout = (CardLayout) (homeDashboardPanel.getLayout());
-    }
-
-    // Conversion of days to corresponding int values 
-    static void daysToInt(int checkIn, int checkOut) {
-
-        List<Integer> bookedDaysArray = new ArrayList<Integer>();
-
-        // Add booked days to ArrayList 
-        if (checkIn >= checkOut) {
-            bookedDaysArray.add(checkIn);
-        } else {
-            // Looping to fill in missing days in between a range 
-            do {
-                bookedDaysArray.add(checkIn);
-                checkIn++;
-            } while (checkIn <= checkOut);
-        }
     }
 
     // Check room availability method
@@ -388,6 +370,7 @@ public class HomeDashboard extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        availableRoomList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(availableRoomList);
 
         javax.swing.GroupLayout checkAvailabilityPanelLayout = new javax.swing.GroupLayout(checkAvailabilityPanel);
@@ -610,12 +593,21 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void reservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationsButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "reservationsCard");
-        
-        // Refresh data in JTable 
-        String[] words = readBooking("D:\\Documents\\GitHub\\javahotelmanagement/bookinglist/#432492.txt");
+
+        // Get file names of each booking in the booking directory 
+        String[] existingBookingsDirectory = enumerateBookings();
+        int i;
+
+        // Clearing existing table contents first ( otherwise they stack up )
         DefaultTableModel model = (DefaultTableModel) bookingTable.getModel();
         model.setRowCount(0);
-        model.addRow(words);
+
+        // Loop through each booking file's contents
+        for (i = 0; i < existingBookingsDirectory.length; i++) {
+            String[] filedata = readBooking(existingBookingsDirectory[i]);
+            model.addRow(filedata);
+        }
+
     }//GEN-LAST:event_reservationsButtonActionPerformed
 
     private void guestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestButtonActionPerformed
@@ -659,7 +651,8 @@ public class HomeDashboard extends javax.swing.JFrame {
         durationOfStayLabel.setText(Integer.toString(stay_duration));
 
         // Save booked days as integer representation
-        daysToInt(checkInCombobox.getSelectedIndex(), checkOutCombobox.getSelectedIndex());
+        int[] saved = daysToInt(checkInCombobox.getSelectedIndex(), checkOutCombobox.getSelectedIndex());
+        System.out.println(Arrays.toString(saved));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void nameTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextBoxActionPerformed
@@ -717,9 +710,6 @@ public class HomeDashboard extends javax.swing.JFrame {
         // Check for days and booking directories
         checkDaysDirectory();
         checkBookingDirectory();
-
-        String[] test = enumerateBookings();
-        System.out.println(Arrays.toString(test));              
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
