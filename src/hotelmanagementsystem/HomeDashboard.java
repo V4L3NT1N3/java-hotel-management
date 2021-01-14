@@ -8,12 +8,14 @@ package hotelmanagementsystem;
 import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import static hotelmanagementsystem.Startup.enumerateBookings;
+import static hotelmanagementsystem.Startup.readBooking;
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 public class HomeDashboard extends javax.swing.JFrame {
 
@@ -235,10 +237,7 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         bookingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Booking ID", "IC/Passport No.", "Name", "Email", "Contact", "Check In", "Check Out"
@@ -611,6 +610,12 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void reservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationsButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "reservationsCard");
+        
+        // Refresh data in JTable 
+        String[] words = readBooking("D:\\Documents\\GitHub\\javahotelmanagement/bookinglist/#432492.txt");
+        DefaultTableModel model = (DefaultTableModel) bookingTable.getModel();
+        model.setRowCount(0);
+        model.addRow(words);
     }//GEN-LAST:event_reservationsButtonActionPerformed
 
     private void guestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestButtonActionPerformed
@@ -712,7 +717,9 @@ public class HomeDashboard extends javax.swing.JFrame {
         // Check for days and booking directories
         checkDaysDirectory();
         checkBookingDirectory();
-        enumerateBookings();
+
+        String[] test = enumerateBookings();
+        System.out.println(Arrays.toString(test));              
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

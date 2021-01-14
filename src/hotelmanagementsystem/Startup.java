@@ -7,6 +7,7 @@ package hotelmanagementsystem;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -79,23 +80,53 @@ public class Startup {
         } catch (Exception e) {
             System.out.println("Failed to read file");
         }
-        
+
         return null;
     }
 
-    static void enumerateBookings() {
-        String currentDirectory = System.getProperty("user.dir");
+//    static void enumerateBookings() {
+//        String currentDirectory = System.getProperty("user.dir");
+//
+//        // Enumerate all files in directory
+//        File folder = new File(currentDirectory + "/bookinglist/");
+//        File[] listOfFiles = folder.listFiles();
+//
+//        for (int i = 0; i < listOfFiles.length; i++) {
+//            if (listOfFiles[i].isFile()) {
+//                System.out.println(currentDirectory + listOfFiles[i].getName());
+//            } else if (listOfFiles[i].isDirectory()) {
+//                // Ignore directories
+//            }
+//        }
+//    }
 
-        // Enumerate all files in directory
-        File folder = new File(currentDirectory + "/bookinglist/");
-        File[] listOfFiles = folder.listFiles();
+    public static String[] enumerateBookings() {
+        try {
+            ArrayList<String> bookingDirectoryList = new ArrayList<String>();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println(listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
-                // Ignore directories
+            String currentDirectory = System.getProperty("user.dir");
+
+            // Enumerate all files in directory
+            File folder = new File(currentDirectory + "/bookinglist/");
+            File[] listOfFiles = folder.listFiles();
+
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    bookingDirectoryList.add(currentDirectory + "/bookinglist/" + listOfFiles[i].getName());
+                } else if (listOfFiles[i].isDirectory()) {
+                    // Ignore directories
+                }
             }
+            
+            String[] bookingDirectoryArray = new String[bookingDirectoryList.size()];
+            bookingDirectoryArray = bookingDirectoryList.toArray(bookingDirectoryArray);
+    
+            return bookingDirectoryArray;
+
+        } catch (Exception e) {
+            System.out.println("Unable to open file");
         }
+
+        return null;
     }
 }
