@@ -10,9 +10,13 @@ import static hotelmanagementsystem.Booking.readBooking;
 import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import static hotelmanagementsystem.Utilities.daysToInt;
+import static hotelmanagementsystem.Utilities.generateRoomNumbers;
 import java.awt.CardLayout;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,11 +31,47 @@ public class HomeDashboard extends javax.swing.JFrame {
         cardLayout = (CardLayout) (homeDashboardPanel.getLayout());
     }
 
-    // Check room availability method
     public void checkAvailability() {
+
+        // Get selected day range 
+        int check_in = checkInCombobox.getSelectedIndex();
+        int check_out = checkOutCombobox.getSelectedIndex();
+
+        ArrayList<String> booked_days = new ArrayList<String>();
+        int[] selected_range = daysToInt(check_in, check_out);
+
+        // Read files within the selected range and store all booked rooms 
+        for (int i : selected_range) {
+            try {
+                String currentDirectory = System.getProperty("user.dir");
+                File myObj = new File(currentDirectory + "/bookingdays/" + i + ".txt");
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    booked_days.add(data);
+                }
+                myReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
+
+        // Generate a list of all possible rooms 
+        ArrayList<String> total_days = generateRoomNumbers(20);
+
+        // Remove booked rooms from all possible rooms
+        for (String i : booked_days) {
+            total_days.remove(new String(i));
+        }
+        
+        // Display available rooms to jTable 
         DefaultListModel demoList = new DefaultListModel();
-        demoList.addElement("R001");
-        demoList.addElement("R001");
+        
+        for (String j : total_days) {
+           demoList.addElement(j);
+        }     
+        
         availableRoomList.setModel(demoList);
     }
 
@@ -45,7 +85,6 @@ public class HomeDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jDialog1 = new javax.swing.JDialog();
-        backgroundColorPanel = new javax.swing.JPanel();
         sideNavigationPanel = new javax.swing.JPanel();
         reservationsButton = new javax.swing.JButton();
         guestButton = new javax.swing.JButton();
@@ -103,19 +142,6 @@ public class HomeDashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 153, 153));
         setForeground(new java.awt.Color(102, 255, 102));
-
-        backgroundColorPanel.setBackground(new java.awt.Color(253, 253, 253));
-
-        javax.swing.GroupLayout backgroundColorPanelLayout = new javax.swing.GroupLayout(backgroundColorPanel);
-        backgroundColorPanel.setLayout(backgroundColorPanelLayout);
-        backgroundColorPanelLayout.setHorizontalGroup(
-            backgroundColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 483, Short.MAX_VALUE)
-        );
-        backgroundColorPanelLayout.setVerticalGroup(
-            backgroundColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
-        );
 
         sideNavigationPanel.setBackground(new java.awt.Color(0, 128, 128));
 
@@ -574,18 +600,11 @@ public class HomeDashboard extends javax.swing.JFrame {
                 .addComponent(sideNavigationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(homeDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(171, 171, 171)
-                    .addComponent(backgroundColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(505, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sideNavigationPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(homeDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(backgroundColorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -641,14 +660,18 @@ public class HomeDashboard extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         cardLayout.show(homeDashboardPanel, "confirmBookingPanel");
 
-        // Passing data to the Confirm Booking form 
+        // Pass selected check in and check out days
         String check_in = checkInCombobox.getSelectedItem().toString();
         String check_out = checkOutCombobox.getSelectedItem().toString();
         String length_stay = check_in + " - " + check_out;
         lengthOfStayLabel.setText(length_stay);
 
+        // Psss calculated stay duration 
         int stay_duration = 1 + (checkOutCombobox.getSelectedIndex() - checkInCombobox.getSelectedIndex());
         durationOfStayLabel.setText(Integer.toString(stay_duration));
+        
+        // Pass selected room number
+        roomNumberLabel.setText(availableRoomList.getSelectedValue());
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -719,7 +742,6 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> availableRoomList;
-    private javax.swing.JPanel backgroundColorPanel;
     private javax.swing.JTable bookingTable;
     private javax.swing.JPanel checkAvailabilityPanel;
     private javax.swing.JComboBox<String> checkInCombobox;

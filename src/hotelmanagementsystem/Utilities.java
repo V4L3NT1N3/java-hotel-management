@@ -43,4 +43,18 @@ public class Utilities {
         return convertedArray;
     }
 
+    public static ArrayList<String> generateRoomNumbers(int max) {
+        
+        int i; 
+        ArrayList<String> room_numbers = new ArrayList<String>();
+        
+        // Generating room numbers based on total number of rooms parameter
+        for (i = 0; i < max; i++){
+            String format_mask = String.format("%03d", i); 
+            room_numbers.add("R" + format_mask);
+        }      
+        
+        return room_numbers;
+        
+    }
 }
