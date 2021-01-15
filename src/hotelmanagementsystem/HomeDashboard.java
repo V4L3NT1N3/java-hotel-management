@@ -5,11 +5,11 @@
  */
 package hotelmanagementsystem;
 
-import static hotelmanagementsystem.Booking.daysToInt;
+import static hotelmanagementsystem.Booking.enumerateBookings;
+import static hotelmanagementsystem.Booking.readBooking;
 import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
-import static hotelmanagementsystem.Startup.enumerateBookings;
-import static hotelmanagementsystem.Startup.readBooking;
+import static hotelmanagementsystem.Utilities.daysToInt;
 import java.awt.CardLayout;
 import java.util.Arrays;
 import java.util.Random;
@@ -434,7 +434,7 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         jLabel9.setText("Room Number");
 
-        roomNumberLabel.setText("R001");
+        roomNumberLabel.setText("R004");
 
         jLabel11.setText("Length of Stay");
 
@@ -650,9 +650,6 @@ public class HomeDashboard extends javax.swing.JFrame {
         int stay_duration = 1 + (checkOutCombobox.getSelectedIndex() - checkInCombobox.getSelectedIndex());
         durationOfStayLabel.setText(Integer.toString(stay_duration));
 
-        // Save booked days as integer representation
-        int[] saved = daysToInt(checkInCombobox.getSelectedIndex(), checkOutCombobox.getSelectedIndex());
-        System.out.println(Arrays.toString(saved));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void nameTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextBoxActionPerformed
@@ -693,6 +690,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         newbooking.setRoomNumber(roomNumberLabel.getText());
         newbooking.setCheckIn(checkInCombobox.getSelectedItem().toString());
         newbooking.setCheckOut(checkOutCombobox.getSelectedItem().toString());
+        newbooking.setBookedDaysInt(daysToInt(checkInCombobox.getSelectedIndex(), checkOutCombobox.getSelectedIndex()));
 
         newbooking.bookRoom();
 

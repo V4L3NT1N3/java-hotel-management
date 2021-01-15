@@ -5,12 +5,13 @@
  */
 package hotelmanagementsystem;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Scanner;
 
 public class Booking {
 
@@ -22,6 +23,7 @@ public class Booking {
     private String room_number;
     private String checkIn;
     private String checkOut;
+    private int[] bookedDaysInt;
 
     public String getBookingID() {
         return booking_id;
@@ -87,6 +89,14 @@ public class Booking {
         this.checkOut = checkOut;
     }
 
+    public int[] getbookedDaysInt() {
+        return bookedDaysInt;
+    }
+
+    public void setBookedDaysInt(int[] bookedDaysInt) {
+        this.bookedDaysInt = bookedDaysInt;
+    }
+
     public void bookRoom() {
 
         // Create new booking file
@@ -101,45 +111,77 @@ public class Booking {
                 System.out.println("File already exists.");
             }
 
-            // Writing details to file
-            FileWriter myWriter = new FileWriter(filename);
-            myWriter.write(booking_id + "\n" + ic_number + "\n" + customer_name + "\n" + email + "\n" + contact_number + "\n" + checkIn + "\n" + checkOut);
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+            // Creating a new booking file and writing details to it 
+            FileWriter bookingDetailsWriter = new FileWriter(filename);
+            bookingDetailsWriter.write(booking_id + "\n" + ic_number + "\n" + customer_name + "\n" + email + "\n" + contact_number + "\n" + checkIn + "\n" + checkOut);
+            bookingDetailsWriter.close();
+            System.out.println("Successfully wrote to booking file.");
+
+            // Adding Room Number to the specified booked days            
+            for (int i : bookedDaysInt) {
+                PrintWriter out = new PrintWriter(new FileWriter(currentDirectory + "/bookingdays/" + String.valueOf(i) + ".txt", true));
+                out.append("\n" + room_number);
+                out.close();
+            }
+            System.out.println("Successfully added to booking list.");
 
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            
+        } catch (Exception e) {
+            System.out.println("An error occurred. Try closing any open system files.");
         }
     }
 
-    public static int[] convertIntegers(List<Integer> integers) {
-        int[] ret = new int[integers.size()];
-        Iterator<Integer> iterator = integers.iterator();
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = iterator.next().intValue();
+    public static String[] readBooking(String file) {
+        try {
+            String[] booking_details = new String[7];
+
+            // Read booking details and store them to an array
+            Scanner scanner = new Scanner(new File(file));
+            for (int i = 0; i < 7; i++) {
+                booking_details[i] = scanner.next();
+            }
+
+            return booking_details;
+
+        } catch (Exception e) {
+            System.out.println("Failed to read file");
         }
-        return ret;
+
+        return null;
     }
 
-    public static int[] daysToInt(int checkIn, int checkOut) {
+    public static String[] enumerateBookings() {
+        try {
+            ArrayList<String> bookingDirectoryList = new ArrayList<String>();
+            String currentDirectory = System.getProperty("user.dir");
 
-        // Conversion of days to corresponding int values 
-        List<Integer> bookedDaysArray = new ArrayList<Integer>();
+            // Enumerate all files in directory
+            File folder = new File(currentDirectory + "/bookinglist/");
+            File[] listOfFiles = folder.listFiles();
 
-        // Add booked days to ArrayList 
-        if (checkIn >= checkOut) {
-            bookedDaysArray.add(checkIn);
-        } else {
-            // Looping to fill in missing days in between a range 
-            do {
-                bookedDaysArray.add(checkIn);
-                checkIn++;
-            } while (checkIn <= checkOut);
+            // Loop to add each file name to ArrayList
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    bookingDirectoryList.add(currentDirectory + "/bookinglist/" + listOfFiles[i].getName());
+                } else if (listOfFiles[i].isDirectory()) {
+                    // Ignore directories
+                }
+            }
+
+            // Converting ArrayList to Array 
+            String[] bookingDirectoryArray = new String[bookingDirectoryList.size()];
+            bookingDirectoryArray = bookingDirectoryList.toArray(bookingDirectoryArray);
+
+            return bookingDirectoryArray;
+
+        } catch (Exception e) {
+            System.out.println("Unable to open file");
         }
-        
-        int[] converted = convertIntegers(bookedDaysArray);
-        return converted;
+
+        return null;
     }
 
 }

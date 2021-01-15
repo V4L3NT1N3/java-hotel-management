@@ -744,7 +744,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="roomNumberLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="R001"/>
+                <Property name="text" type="java.lang.String" value="R004"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel11">

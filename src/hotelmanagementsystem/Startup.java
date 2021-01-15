@@ -7,14 +7,12 @@ package hotelmanagementsystem;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Startup {
 
     static void checkDaysDirectory() {
 
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String[] days = {"0", "1", "2", "3", "4", "5", "6"};
         int i;
         String currentDirectory = System.getProperty("user.dir");
 
@@ -64,53 +62,4 @@ public class Startup {
         }
     }
 
-    public static String[] readBooking(String file) {
-        try {
-            String[] booking_details = new String[7];
-
-            // Read booking details and store them to an array
-            Scanner scanner = new Scanner(new File(file));
-            for (int i = 0; i < 7; i++) {
-                booking_details[i] = scanner.next();
-            }
-
-            return booking_details;
-
-        } catch (Exception e) {
-            System.out.println("Failed to read file");
-        }
-
-        return null;
-    }
-
-    public static String[] enumerateBookings() {
-        try {
-            ArrayList<String> bookingDirectoryList = new ArrayList<String>();
-            String currentDirectory = System.getProperty("user.dir");
-
-            // Enumerate all files in directory
-            File folder = new File(currentDirectory + "/bookinglist/");
-            File[] listOfFiles = folder.listFiles();
-
-            // Loop to add each file name to ArrayList
-            for (int i = 0; i < listOfFiles.length; i++) {
-                if (listOfFiles[i].isFile()) {
-                    bookingDirectoryList.add(currentDirectory + "/bookinglist/" + listOfFiles[i].getName());
-                } else if (listOfFiles[i].isDirectory()) {
-                    // Ignore directories
-                }
-            }
-            
-            // Converting ArrayList to Array 
-            String[] bookingDirectoryArray = new String[bookingDirectoryList.size()];
-            bookingDirectoryArray = bookingDirectoryList.toArray(bookingDirectoryArray);
-    
-            return bookingDirectoryArray;
-
-        } catch (Exception e) {
-            System.out.println("Unable to open file");
-        }
-
-        return null;
-    }
 }
