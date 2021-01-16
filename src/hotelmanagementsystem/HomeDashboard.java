@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class HomeDashboard extends javax.swing.JFrame {
@@ -74,6 +75,40 @@ public class HomeDashboard extends javax.swing.JFrame {
         
         availableRoomList.setModel(demoList);
     }
+    
+    public void loadTableContents() {
+        
+        // Get file names of each booking in the booking directory 
+        String[] existingBookingsDirectory = enumerateBookings();
+        int i;
+
+        // Clearing existing table contents first ( otherwise they stack up )
+        DefaultTableModel model = (DefaultTableModel) bookingTable.getModel();
+        model.setRowCount(0);
+
+        // Loop through each booking file's contents
+        for (i = 0; i < existingBookingsDirectory.length; i++) {
+            String[] filedata = readBooking(existingBookingsDirectory[i]);
+            model.addRow(filedata);
+        }
+    }
+    
+    public void loadTableContents(String name) {
+        
+        // Get file names of each booking in the booking directory 
+        String[] existingBookingsDirectory = enumerateBookings();
+        int i;
+
+        // Clearing existing table contents first ( otherwise they stack up )
+        DefaultTableModel model = (DefaultTableModel) paymentTable.getModel();
+        model.setRowCount(0);
+
+        // Loop through each booking file's contents
+        for (i = 0; i < existingBookingsDirectory.length; i++) {
+            String[] filedata = readBooking(existingBookingsDirectory[i]);
+            model.addRow(filedata);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,6 +138,12 @@ public class HomeDashboard extends javax.swing.JFrame {
         guestsPanel = new javax.swing.JPanel();
         paymentPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        paymentTable = new javax.swing.JTable();
         settingsPanel = new javax.swing.JPanel();
         checkAvailabilityPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -127,6 +168,28 @@ public class HomeDashboard extends javax.swing.JFrame {
         emailTextBox = new javax.swing.JTextField();
         contactTextBox = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        paymentDetailsPanel = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        roomChargesLabel = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        totalChargesLabel = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        customerICLabel = new javax.swing.JLabel();
+        bookedRoomLabel = new javax.swing.JLabel();
+        customerNameLabel = new javax.swing.JLabel();
+        lengthOfStaylabel = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -248,7 +311,7 @@ public class HomeDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Booking ID", "IC/Passport No.", "Name", "Email", "Contact", "Check In", "Check Out"
+                "Booking ID", "IC/Passport No.", "Name", "Room No.", "Contact", "Check In", "Length of Stay"
             }
         ) {
             Class[] types = new Class [] {
@@ -317,7 +380,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         guestsPanel.setLayout(guestsPanelLayout);
         guestsPanelLayout.setHorizontalGroup(
             guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 925, Short.MAX_VALUE)
+            .addGap(0, 937, Short.MAX_VALUE)
         );
         guestsPanelLayout.setVerticalGroup(
             guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,23 +389,92 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         homeDashboardPanel.add(guestsPanel, "guestsCard");
 
-        jLabel4.setText("Third");
+        paymentPanel.setBackground(new java.awt.Color(253, 253, 253));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 128, 128));
+        jLabel4.setText("Payments");
+
+        jLabel22.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel22.setText("14th - 20th February");
+
+        jTextField2.setText("jTextField1");
+
+        jButton5.setText("Search");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Add Payment");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        paymentTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Booking ID", "IC/Passport No.", "Name", "Room No.", "Check In", "Check Out", "Length of Stay"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(paymentTable);
 
         javax.swing.GroupLayout paymentPanelLayout = new javax.swing.GroupLayout(paymentPanel);
         paymentPanel.setLayout(paymentPanelLayout);
         paymentPanelLayout.setHorizontalGroup(
             paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paymentPanelLayout.createSequentialGroup()
-                .addGap(338, 338, 338)
-                .addComponent(jLabel4)
-                .addContainerGap(563, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6))
+                    .addGroup(paymentPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5)))
+                .addGap(32, 32, 32))
+            .addGroup(paymentPanelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 897, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         paymentPanelLayout.setVerticalGroup(
             paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paymentPanelLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentPanelLayout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(paymentPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         homeDashboardPanel.add(paymentPanel, "paymentCard");
@@ -351,7 +483,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         settingsPanel.setLayout(settingsPanelLayout);
         settingsPanelLayout.setHorizontalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 925, Short.MAX_VALUE)
+            .addGap(0, 937, Short.MAX_VALUE)
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,7 +555,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                     .addGroup(checkAvailabilityPanelLayout.createSequentialGroup()
                         .addGap(284, 284, 284)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addContainerGap(319, Short.MAX_VALUE))
         );
         checkAvailabilityPanelLayout.setVerticalGroup(
             checkAvailabilityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -546,12 +678,12 @@ public class HomeDashboard extends javax.swing.JFrame {
                     .addGroup(customerInfoPanelLayout.createSequentialGroup()
                         .addGap(215, 215, 215)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(268, Short.MAX_VALUE))
             .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(customerInfoPanelLayout.createSequentialGroup()
                     .addGap(71, 71, 71)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(334, Short.MAX_VALUE)))
+                    .addContainerGap(346, Short.MAX_VALUE)))
         );
         customerInfoPanelLayout.setVerticalGroup(
             customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -592,6 +724,171 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         homeDashboardPanel.add(customerInfoPanel, "confirmBookingPanel");
 
+        paymentDetailsPanel.setBackground(new java.awt.Color(253, 253, 253));
+
+        jLabel10.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 128, 128));
+        jLabel10.setText("Payment Details");
+
+        jLabel12.setText("Customer IC ");
+
+        jLabel14.setText("Booked Room ");
+
+        jLabel16.setText("Customer Name");
+
+        jLabel17.setText("Length of Stay ");
+
+        jButton7.setText("Make payment ");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("Room Charges");
+
+        jLabel19.setText("Tourism Tax");
+
+        jLabel20.setText("Service Tax ");
+
+        jLabel21.setText("Total");
+
+        jLabel23.setText("10%");
+
+        roomChargesLabel.setText("Room Charges");
+
+        jLabel25.setText("RM 10 / night");
+
+        totalChargesLabel.setText("totalChargesLabel");
+
+        jLabel24.setText("Enter payment amount");
+
+        jTextField3.setText("Eg. 150");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel21)
+                    .addComponent(jLabel24))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel23)
+                        .addComponent(roomChargesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(totalChargesLabel)
+                        .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(roomChargesLabel)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel23)
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel25)
+                        .addGap(54, 54, 54)
+                        .addComponent(totalChargesLabel))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel20)
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel19)
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel21)))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+
+        customerICLabel.setText("Customer IC ");
+
+        bookedRoomLabel.setText("Booked Room ");
+
+        customerNameLabel.setText("Customer Name");
+
+        lengthOfStaylabel.setText("Length of Stay ");
+
+        javax.swing.GroupLayout paymentDetailsPanelLayout = new javax.swing.GroupLayout(paymentDetailsPanel);
+        paymentDetailsPanel.setLayout(paymentDetailsPanelLayout);
+        paymentDetailsPanelLayout.setHorizontalGroup(
+            paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                        .addGap(318, 318, 318)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addGap(46, 46, 46)
+                .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(customerICLabel)
+                    .addComponent(bookedRoomLabel)
+                    .addComponent(customerNameLabel)
+                    .addComponent(lengthOfStaylabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66))
+        );
+        paymentDetailsPanelLayout.setVerticalGroup(
+            paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(54, 54, 54)
+                                .addComponent(jLabel16)
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel14)
+                                .addGap(58, 58, 58)
+                                .addComponent(jLabel17))
+                            .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                                .addComponent(customerICLabel)
+                                .addGap(54, 54, 54)
+                                .addComponent(customerNameLabel)
+                                .addGap(44, 44, 44)
+                                .addComponent(bookedRoomLabel)
+                                .addGap(58, 58, 58)
+                                .addComponent(lengthOfStaylabel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90))))
+        );
+
+        homeDashboardPanel.add(paymentDetailsPanel, "paymentDetailsCard");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -613,19 +910,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private void reservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationsButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "reservationsCard");
 
-        // Get file names of each booking in the booking directory 
-        String[] existingBookingsDirectory = enumerateBookings();
-        int i;
-
-        // Clearing existing table contents first ( otherwise they stack up )
-        DefaultTableModel model = (DefaultTableModel) bookingTable.getModel();
-        model.setRowCount(0);
-
-        // Loop through each booking file's contents
-        for (i = 0; i < existingBookingsDirectory.length; i++) {
-            String[] filedata = readBooking(existingBookingsDirectory[i]);
-            model.addRow(filedata);
-        }
+        loadTableContents();
 
     }//GEN-LAST:event_reservationsButtonActionPerformed
 
@@ -635,6 +920,8 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "paymentCard");
+        
+        loadTableContents("Payment");
     }//GEN-LAST:event_paymentButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
@@ -723,6 +1010,34 @@ public class HomeDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_customerInfoPanelComponentAdded
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        cardLayout.show(homeDashboardPanel, "paymentDetailsCard");
+        
+        // Get selected row 
+        int row = paymentTable.getSelectedRow();
+        
+        // Pass selected row data 
+        customerICLabel.setText(paymentTable.getModel().getValueAt(row , 1).toString());
+        customerNameLabel.setText(paymentTable.getModel().getValueAt(row , 2).toString());
+        bookedRoomLabel.setText(paymentTable.getModel().getValueAt(row , 3).toString());
+        lengthOfStaylabel.setText(paymentTable.getModel().getValueAt(row , 6).toString());
+        
+        int length_stay = Integer.parseInt(paymentTable.getModel().getValueAt(row , 6).toString());
+        int room_charges = length_stay * 350;
+        int total_charges = room_charges + ((room_charges * 10) / 100) + ( length_stay * 10 );
+        
+        roomChargesLabel.setText("RM " + room_charges);
+        totalChargesLabel.setText("RM " + total_charges);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        JOptionPane.showMessageDialog(homeDashboardPanel, "Add Thank You Here","Alert",JOptionPane.WARNING_MESSAGE);     
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -742,12 +1057,15 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> availableRoomList;
+    private javax.swing.JLabel bookedRoomLabel;
     private javax.swing.JTable bookingTable;
     private javax.swing.JPanel checkAvailabilityPanel;
     private javax.swing.JComboBox<String> checkInCombobox;
     private javax.swing.JComboBox<String> checkOutCombobox;
     private javax.swing.JTextField contactTextBox;
+    private javax.swing.JLabel customerICLabel;
     private javax.swing.JPanel customerInfoPanel;
+    private javax.swing.JLabel customerNameLabel;
     private javax.swing.JLabel durationOfStayLabel;
     private javax.swing.JTextField emailTextBox;
     private javax.swing.JButton guestButton;
@@ -758,12 +1076,28 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -771,18 +1105,27 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lengthOfStayLabel;
+    private javax.swing.JLabel lengthOfStaylabel;
     private javax.swing.JTextField nameTextBox;
     private javax.swing.JButton paymentButton;
+    private javax.swing.JPanel paymentDetailsPanel;
     private javax.swing.JPanel paymentPanel;
+    private javax.swing.JTable paymentTable;
     private javax.swing.JButton reservationsButton;
     private javax.swing.JPanel reservationsPanel;
+    private javax.swing.JLabel roomChargesLabel;
     private javax.swing.JLabel roomNumberLabel;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JPanel sideNavigationPanel;
+    private javax.swing.JLabel totalChargesLabel;
     // End of variables declaration//GEN-END:variables
 }

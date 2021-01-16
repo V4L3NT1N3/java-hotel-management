@@ -5,7 +5,6 @@
  */
 package hotelmanagementsystem;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -113,7 +112,7 @@ public class Booking {
 
             // Creating a new booking file and writing details to it 
             FileWriter bookingDetailsWriter = new FileWriter(filename);
-            bookingDetailsWriter.write(booking_id + "\n" + ic_number + "\n" + customer_name + "\n" + email + "\n" + contact_number + "\n" + checkIn + "\n" + checkOut);
+            bookingDetailsWriter.write(booking_id + "\n" + ic_number + "\n" + customer_name + "\n" + room_number + "\n" + checkIn + "\n" + checkOut + "\n" + bookedDaysInt.length);
             bookingDetailsWriter.close();
             System.out.println("Successfully wrote to booking file.");
 
