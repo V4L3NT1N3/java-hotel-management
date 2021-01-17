@@ -216,7 +216,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel1" min="-2" pref="303" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jTextField1" min="-2" pref="237" max="-2" attributes="0"/>
+                              <Component id="searchTextField" min="-2" pref="237" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -237,7 +237,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" pref="54" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="searchTextField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                               <Component id="jButton2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -265,10 +265,14 @@
                 <Property name="text" type="java.lang.String" value="Reservations"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="searchTextField">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jTextField1"/>
+                <Property name="text" type="java.lang.String" value="Search "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchTextFieldActionPerformed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchTextFieldKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
@@ -298,6 +302,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="bookingTable">
                   <Properties>
+                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="0">
                         <Column editable="true" title="Booking ID" type="java.lang.String"/>
@@ -374,7 +379,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" pref="303" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jTextField2" min="-2" pref="237" max="-2" attributes="0"/>
+                              <Component id="queryTextField" min="-2" pref="237" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jButton5" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -399,7 +404,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextField2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="queryTextField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="jButton5" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -439,9 +444,9 @@
                 <Property name="text" type="java.lang.String" value="14th - 20th February"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
+            <Component class="javax.swing.JTextField" name="queryTextField">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jTextField1"/>
+                <Property name="text" type="java.lang.String" value="Search"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton5">

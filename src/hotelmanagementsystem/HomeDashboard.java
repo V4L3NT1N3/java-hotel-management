@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class HomeDashboard extends javax.swing.JFrame {
 
@@ -131,7 +133,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         homeDashboardPanel = new javax.swing.JPanel();
         reservationsPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        searchTextField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -141,7 +143,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         paymentPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        queryTextField = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -309,7 +311,17 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 128, 128));
         jLabel1.setText("Reservations");
 
-        jTextField1.setText("jTextField1");
+        searchTextField.setText("Search ");
+        searchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTextFieldActionPerformed(evt);
+            }
+        });
+        searchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchTextFieldKeyReleased(evt);
+            }
+        });
 
         jButton2.setText("Search");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -322,6 +334,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setText("14th - 20th February");
 
+        bookingTable.setAutoCreateRowSorter(true);
         bookingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -361,7 +374,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                     .addGroup(reservationsPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)))
                 .addGap(37, 37, 37))
@@ -377,7 +390,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                 .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -415,7 +428,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(102, 102, 102));
         jLabel22.setText("14th - 20th February");
 
-        jTextField2.setText("jTextField1");
+        queryTextField.setText("Search");
 
         jButton5.setText("Search");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -463,7 +476,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                     .addGroup(paymentPanelLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(queryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5)))
                 .addGap(32, 32, 32))
@@ -482,7 +495,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                     .addGroup(paymentPanelLayout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(queryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1065,6 +1078,13 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
+        DefaultTableModel model = (DefaultTableModel) bookingTable.getModel();
+        TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<DefaultTableModel>(model);
+        bookingTable.setRowSorter(rowSorter);
+
+        // Get search query and filter the table based on the query 
+        String query = searchTextField.getText();
+        rowSorter.setRowFilter(RowFilter.regexFilter(query));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void checkInComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInComboboxActionPerformed
@@ -1142,7 +1162,13 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_customerInfoPanelComponentAdded
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) paymentTable.getModel();
+        TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<DefaultTableModel>(model);
+        paymentTable.setRowSorter(rowSorter);
+
+        // Get search query and filter the table based on the query 
+        String query = queryTextField.getText();
+        rowSorter.setRowFilter(RowFilter.regexFilter(query));
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1169,21 +1195,21 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-      
+
         // Move paid bookings to the paidbooking folder
         try {
             moveFolders(bookingIDLabel.getText());
         } catch (IOException ex) {
             System.out.println(ex);
         }
-        
+
         // Confirm payment if amount paid is sufficient
         cardLayout.show(homeDashboardPanel, "paymentreceiptCard");
-        
+
         // Pass variables to receipt page 
         bookingIDLabel_Payment.setText(bookingIDLabel.getText());
         amountPaidLabel_Payment.setText("RM " + paymentAmountTextField.getText());
-        
+
         // Calculate and display change 
         int paid_amount = Integer.parseInt(paymentAmountTextField.getText());
         int room_charges = Integer.parseInt(lengthOfStaylabel.getText()) * 350;
@@ -1192,16 +1218,31 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-       
+
         cardLayout.show(homeDashboardPanel, "paymentCard");
-        
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+
+        // Delete all existing folder data
         resetSystem("bookingdays");
         resetSystem("bookinglist");
         resetSystem("paidbookings");
+
+        // Check for days and booking directories
+        checkDaysDirectory();
+        checkBookingDirectory("bookinglist");
+        checkBookingDirectory("paidbookings");
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
+
+    }//GEN-LAST:event_searchTextFieldActionPerformed
+
+    private void searchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyReleased
+
+    }//GEN-LAST:event_searchTextFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1288,8 +1329,6 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lengthOfStayLabel;
     private javax.swing.JLabel lengthOfStaylabel;
     private javax.swing.JTextField nameTextBox;
@@ -1299,10 +1338,12 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel paymentPanel;
     private javax.swing.JTable paymentTable;
     private javax.swing.JPanel paymentreceiptPanel;
+    private javax.swing.JTextField queryTextField;
     private javax.swing.JButton reservationsButton;
     private javax.swing.JPanel reservationsPanel;
     private javax.swing.JLabel roomChargesLabel;
     private javax.swing.JLabel roomNumberLabel;
+    private javax.swing.JTextField searchTextField;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JPanel sideNavigationPanel;

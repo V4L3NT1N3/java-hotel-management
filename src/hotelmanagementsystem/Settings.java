@@ -5,6 +5,8 @@
  */
 package hotelmanagementsystem;
 
+import static hotelmanagementsystem.Startup.checkBookingDirectory;
+import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -29,13 +31,17 @@ public class Settings {
             }
         }
 
-        for (String s : bookingDirectoryList) {
-            File myObj = new File(s);
-            if (myObj.delete()) {
-                System.out.println("Deleted the file: " + myObj.getName());
-            } else {
-                System.out.println("Failed to delete the file.");
+        // Delete all files in the directory
+        try {
+            for (String s : bookingDirectoryList) {
+                File myObj = new File(s);
+                myObj.delete();
             }
-        }
+        } catch (Exception e) {
+            System.out.println("Unable to delete files");
+        }    
+
+        System.out.println("System reset succesful");
+
     }
 }
