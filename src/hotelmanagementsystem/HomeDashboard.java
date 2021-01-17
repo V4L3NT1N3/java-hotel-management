@@ -8,6 +8,7 @@ package hotelmanagementsystem;
 import static hotelmanagementsystem.Booking.enumerateBookings;
 import static hotelmanagementsystem.Booking.readBooking;
 import static hotelmanagementsystem.Payment.moveFolders;
+import static hotelmanagementsystem.Settings.resetSystem;
 import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import static hotelmanagementsystem.Utilities.daysToInt;
@@ -19,10 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class HomeDashboard extends javax.swing.JFrame {
@@ -69,19 +67,19 @@ public class HomeDashboard extends javax.swing.JFrame {
         for (String i : booked_days) {
             total_days.remove(new String(i));
         }
-        
+
         // Display available rooms to jTable 
         DefaultListModel demoList = new DefaultListModel();
-        
+
         for (String j : total_days) {
-           demoList.addElement(j);
-        }     
-        
+            demoList.addElement(j);
+        }
+
         availableRoomList.setModel(demoList);
     }
-    
+
     public void loadTableContents() {
-        
+
         // Get file names of each booking in the booking directory 
         String[] existingBookingsDirectory = enumerateBookings();
         int i;
@@ -96,9 +94,9 @@ public class HomeDashboard extends javax.swing.JFrame {
             model.addRow(filedata);
         }
     }
-    
+
     public void loadTableContents(String name) {
-        
+
         // Get file names of each booking in the booking directory 
         String[] existingBookingsDirectory = enumerateBookings();
         int i;
@@ -149,6 +147,8 @@ public class HomeDashboard extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         paymentTable = new javax.swing.JTable();
         settingsPanel = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         checkAvailabilityPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -189,13 +189,23 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         totalChargesLabel = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        paymentAmountTextField = new javax.swing.JTextField();
         customerICLabel = new javax.swing.JLabel();
         bookingIDLabel = new javax.swing.JLabel();
         customerNameLabel = new javax.swing.JLabel();
         lengthOfStaylabel = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         bookedRoomLabel = new javax.swing.JLabel();
+        paymentreceiptPanel = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        bookingIDLabel_Payment = new javax.swing.JLabel();
+        amountPaidLabel_Payment = new javax.swing.JLabel();
+        changeAmountLabel = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -485,15 +495,39 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         homeDashboardPanel.add(paymentPanel, "paymentCard");
 
+        jLabel32.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(0, 128, 128));
+        jLabel32.setText("Settings");
+
+        jButton9.setText("Reset System ");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
         settingsPanel.setLayout(settingsPanelLayout);
         settingsPanelLayout.setHorizontalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 937, Short.MAX_VALUE)
+            .addGroup(settingsPanelLayout.createSequentialGroup()
+                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(settingsPanelLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(settingsPanelLayout.createSequentialGroup()
+                        .addGap(334, 334, 334)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(359, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 681, Short.MAX_VALUE)
+            .addGroup(settingsPanelLayout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 332, Short.MAX_VALUE)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(156, 156, 156))
         );
 
         homeDashboardPanel.add(settingsPanel, "settingsCard");
@@ -769,7 +803,7 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         jLabel24.setText("Enter payment amount");
 
-        jTextField3.setText("Eg. 150");
+        paymentAmountTextField.setText("Eg. 150");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -790,7 +824,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addComponent(roomChargesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(totalChargesLabel)
                         .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(paymentAmountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -817,7 +851,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(paymentAmountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
@@ -840,14 +874,14 @@ public class HomeDashboard extends javax.swing.JFrame {
             .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
                 .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+                        .addGap(126, 126, 126)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
                         .addGap(318, 318, 318)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
-                .addGap(106, 106, 106)
+                .addContainerGap(143, Short.MAX_VALUE)
                 .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
                     .addComponent(jLabel14)
@@ -861,7 +895,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                     .addComponent(bookingIDLabel)
                     .addComponent(customerNameLabel)
                     .addComponent(lengthOfStaylabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                .addGap(126, 126, 126)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
         );
@@ -876,7 +910,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+                        .addGap(56, 56, 56)
                         .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paymentDetailsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel12)
@@ -898,12 +932,93 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lengthOfStaylabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(90, 90, 90))))
         );
 
         homeDashboardPanel.add(paymentDetailsPanel, "paymentDetailsCard");
+
+        jLabel27.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(0, 128, 128));
+        jLabel27.setText("Payment Succesful");
+
+        jLabel28.setForeground(new java.awt.Color(51, 153, 0));
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotelmanagementsystem/greentick.png"))); // NOI18N
+
+        jButton8.setText("Return Home");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jLabel29.setText("Booking ID :");
+
+        jLabel30.setText("Amount Paid :");
+
+        jLabel31.setText("Change :");
+
+        bookingIDLabel_Payment.setText("Booking ID :");
+
+        amountPaidLabel_Payment.setText("Amount Paid :");
+
+        changeAmountLabel.setText("Change :");
+
+        javax.swing.GroupLayout paymentreceiptPanelLayout = new javax.swing.GroupLayout(paymentreceiptPanel);
+        paymentreceiptPanel.setLayout(paymentreceiptPanelLayout);
+        paymentreceiptPanelLayout.setHorizontalGroup(
+            paymentreceiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paymentreceiptPanelLayout.createSequentialGroup()
+                .addContainerGap(259, Short.MAX_VALUE)
+                .addGroup(paymentreceiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentreceiptPanelLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(paymentreceiptPanelLayout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addGroup(paymentreceiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel29)
+                            .addComponent(jLabel31))
+                        .addGap(52, 52, 52)
+                        .addGroup(paymentreceiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(amountPaidLabel_Payment)
+                            .addComponent(bookingIDLabel_Payment)
+                            .addComponent(changeAmountLabel)))
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(paymentreceiptPanelLayout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(242, 242, 242))
+        );
+        paymentreceiptPanelLayout.setVerticalGroup(
+            paymentreceiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paymentreceiptPanelLayout.createSequentialGroup()
+                .addContainerGap(90, Short.MAX_VALUE)
+                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addGroup(paymentreceiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paymentreceiptPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel30)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel31))
+                    .addGroup(paymentreceiptPanelLayout.createSequentialGroup()
+                        .addComponent(bookingIDLabel_Payment)
+                        .addGap(18, 18, 18)
+                        .addComponent(amountPaidLabel_Payment)
+                        .addGap(29, 29, 29)
+                        .addComponent(changeAmountLabel)))
+                .addGap(82, 82, 82)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
+        );
+
+        homeDashboardPanel.add(paymentreceiptPanel, "paymentreceiptCard");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -936,7 +1051,7 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "paymentCard");
-        
+
         loadTableContents("Payment");
     }//GEN-LAST:event_paymentButtonActionPerformed
 
@@ -972,7 +1087,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         // Psss calculated stay duration 
         int stay_duration = 1 + (checkOutCombobox.getSelectedIndex() - checkInCombobox.getSelectedIndex());
         durationOfStayLabel.setText(Integer.toString(stay_duration));
-        
+
         // Pass selected room number
         roomNumberLabel.setText(availableRoomList.getSelectedValue());
 
@@ -1032,39 +1147,61 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         cardLayout.show(homeDashboardPanel, "paymentDetailsCard");
-        
+
         // Get selected row 
         int row = paymentTable.getSelectedRow();
-        
+
         // Pass selected row data 
-        customerICLabel.setText(paymentTable.getModel().getValueAt(row , 1).toString());
-        customerNameLabel.setText(paymentTable.getModel().getValueAt(row , 2).toString());
-        bookedRoomLabel.setText(paymentTable.getModel().getValueAt(row , 3).toString());
-        lengthOfStaylabel.setText(paymentTable.getModel().getValueAt(row , 6).toString());
-        bookingIDLabel.setText(paymentTable.getModel().getValueAt(row , 0).toString());
-        
+        customerICLabel.setText(paymentTable.getModel().getValueAt(row, 1).toString());
+        customerNameLabel.setText(paymentTable.getModel().getValueAt(row, 2).toString());
+        bookedRoomLabel.setText(paymentTable.getModel().getValueAt(row, 3).toString());
+        lengthOfStaylabel.setText(paymentTable.getModel().getValueAt(row, 6).toString());
+        bookingIDLabel.setText(paymentTable.getModel().getValueAt(row, 0).toString());
+
         // Calculation of total charges and room charges #quickmaff
-        int length_stay = Integer.parseInt(paymentTable.getModel().getValueAt(row , 6).toString());
+        int length_stay = Integer.parseInt(paymentTable.getModel().getValueAt(row, 6).toString());
         int room_charges = length_stay * 350;
-        int total_charges = room_charges + ((room_charges * 10) / 100) + ( length_stay * 10 );
-        
+        int total_charges = room_charges + ((room_charges * 10) / 100) + (length_stay * 10);
+
         // Set total and room charges labels
         roomChargesLabel.setText("RM " + room_charges);
         totalChargesLabel.setText("RM " + total_charges);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        
-        // Display payment receipt 
-        JOptionPane.showMessageDialog(homeDashboardPanel, "Add Thank You Here","Alert",JOptionPane.WARNING_MESSAGE);  
-        
+      
         // Move paid bookings to the paidbooking folder
         try {
             moveFolders(bookingIDLabel.getText());
         } catch (IOException ex) {
             System.out.println(ex);
         }
+        
+        // Confirm payment if amount paid is sufficient
+        cardLayout.show(homeDashboardPanel, "paymentreceiptCard");
+        
+        // Pass variables to receipt page 
+        bookingIDLabel_Payment.setText(bookingIDLabel.getText());
+        amountPaidLabel_Payment.setText("RM " + paymentAmountTextField.getText());
+        
+        // Calculate and display change 
+        int paid_amount = Integer.parseInt(paymentAmountTextField.getText());
+        int room_charges = Integer.parseInt(lengthOfStaylabel.getText()) * 350;
+        int change = paid_amount - room_charges;
+        changeAmountLabel.setText("RM " + String.valueOf(change));
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+       
+        cardLayout.show(homeDashboardPanel, "paymentCard");
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        resetSystem("bookingdays");
+        resetSystem("bookinglist");
+        resetSystem("paidbookings");
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1085,10 +1222,13 @@ public class HomeDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel amountPaidLabel_Payment;
     private javax.swing.JList<String> availableRoomList;
     private javax.swing.JLabel bookedRoomLabel;
     private javax.swing.JLabel bookingIDLabel;
+    private javax.swing.JLabel bookingIDLabel_Payment;
     private javax.swing.JTable bookingTable;
+    private javax.swing.JLabel changeAmountLabel;
     private javax.swing.JPanel checkAvailabilityPanel;
     private javax.swing.JComboBox<String> checkInCombobox;
     private javax.swing.JComboBox<String> checkOutCombobox;
@@ -1109,6 +1249,8 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1129,7 +1271,13 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1142,14 +1290,15 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lengthOfStayLabel;
     private javax.swing.JLabel lengthOfStaylabel;
     private javax.swing.JTextField nameTextBox;
+    private javax.swing.JTextField paymentAmountTextField;
     private javax.swing.JButton paymentButton;
     private javax.swing.JPanel paymentDetailsPanel;
     private javax.swing.JPanel paymentPanel;
     private javax.swing.JTable paymentTable;
+    private javax.swing.JPanel paymentreceiptPanel;
     private javax.swing.JButton reservationsButton;
     private javax.swing.JPanel reservationsPanel;
     private javax.swing.JLabel roomChargesLabel;

@@ -20,9 +20,9 @@ public class Startup {
         File directory = new File(currentDirectory + "/bookingdays/");
         try {
             if (directory.mkdir()) {
-                System.out.println("Days directory created");
+                System.out.println("bookingdays directory created");
             } else {
-                System.out.println("Days directory exists");
+                System.out.println("bookingdays directory exists");
             }
         } catch (Exception e) {
             e.printStackTrace();
