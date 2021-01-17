@@ -7,6 +7,7 @@ package hotelmanagementsystem;
 
 import static hotelmanagementsystem.Booking.enumerateBookings;
 import static hotelmanagementsystem.Booking.readBooking;
+import static hotelmanagementsystem.Payment.moveFolders;
 import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import static hotelmanagementsystem.Utilities.daysToInt;
@@ -14,9 +15,12 @@ import static hotelmanagementsystem.Utilities.generateRoomNumbers;
 import java.awt.CardLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -187,9 +191,11 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         customerICLabel = new javax.swing.JLabel();
-        bookedRoomLabel = new javax.swing.JLabel();
+        bookingIDLabel = new javax.swing.JLabel();
         customerNameLabel = new javax.swing.JLabel();
         lengthOfStaylabel = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        bookedRoomLabel = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -732,7 +738,7 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         jLabel12.setText("Customer IC ");
 
-        jLabel14.setText("Booked Room ");
+        jLabel14.setText("Booking ID");
 
         jLabel16.setText("Customer Name");
 
@@ -817,11 +823,15 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         customerICLabel.setText("Customer IC ");
 
-        bookedRoomLabel.setText("Booked Room ");
+        bookingIDLabel.setText("Booking ID");
 
         customerNameLabel.setText("Customer Name");
 
         lengthOfStaylabel.setText("Length of Stay ");
+
+        jLabel26.setText("Booked Room ");
+
+        bookedRoomLabel.setText("Booked Room ");
 
         javax.swing.GroupLayout paymentDetailsPanelLayout = new javax.swing.GroupLayout(paymentDetailsPanel);
         paymentDetailsPanel.setLayout(paymentDetailsPanelLayout);
@@ -842,11 +852,13 @@ public class HomeDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel14)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel17))
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel26))
                 .addGap(46, 46, 46)
                 .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(customerICLabel)
                     .addComponent(bookedRoomLabel)
+                    .addComponent(customerICLabel)
+                    .addComponent(bookingIDLabel)
                     .addComponent(customerNameLabel)
                     .addComponent(lengthOfStaylabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
@@ -865,24 +877,28 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
                         .addGap(64, 64, 64)
-                        .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                        .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paymentDetailsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(54, 54, 54)
                                 .addComponent(jLabel16)
                                 .addGap(44, 44, 44)
-                                .addComponent(jLabel14)
-                                .addGap(58, 58, 58)
-                                .addComponent(jLabel17))
-                            .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel14))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paymentDetailsPanelLayout.createSequentialGroup()
                                 .addComponent(customerICLabel)
                                 .addGap(54, 54, 54)
                                 .addComponent(customerNameLabel)
                                 .addGap(44, 44, 44)
-                                .addComponent(bookedRoomLabel)
-                                .addGap(58, 58, 58)
-                                .addComponent(lengthOfStaylabel)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                                .addComponent(bookingIDLabel)))
+                        .addGap(33, 33, 33)
+                        .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel26)
+                            .addComponent(bookedRoomLabel))
+                        .addGap(39, 39, 39)
+                        .addGroup(paymentDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lengthOfStaylabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(90, 90, 90))))
         );
@@ -1025,17 +1041,29 @@ public class HomeDashboard extends javax.swing.JFrame {
         customerNameLabel.setText(paymentTable.getModel().getValueAt(row , 2).toString());
         bookedRoomLabel.setText(paymentTable.getModel().getValueAt(row , 3).toString());
         lengthOfStaylabel.setText(paymentTable.getModel().getValueAt(row , 6).toString());
+        bookingIDLabel.setText(paymentTable.getModel().getValueAt(row , 0).toString());
         
+        // Calculation of total charges and room charges #quickmaff
         int length_stay = Integer.parseInt(paymentTable.getModel().getValueAt(row , 6).toString());
         int room_charges = length_stay * 350;
         int total_charges = room_charges + ((room_charges * 10) / 100) + ( length_stay * 10 );
         
+        // Set total and room charges labels
         roomChargesLabel.setText("RM " + room_charges);
         totalChargesLabel.setText("RM " + total_charges);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        JOptionPane.showMessageDialog(homeDashboardPanel, "Add Thank You Here","Alert",JOptionPane.WARNING_MESSAGE);     
+        
+        // Display payment receipt 
+        JOptionPane.showMessageDialog(homeDashboardPanel, "Add Thank You Here","Alert",JOptionPane.WARNING_MESSAGE);  
+        
+        // Move paid bookings to the paidbooking folder
+        try {
+            moveFolders(bookingIDLabel.getText());
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
@@ -1045,7 +1073,8 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         // Check for days and booking directories
         checkDaysDirectory();
-        checkBookingDirectory();
+        checkBookingDirectory("bookinglist");
+        checkBookingDirectory("paidbookings");
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1058,6 +1087,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> availableRoomList;
     private javax.swing.JLabel bookedRoomLabel;
+    private javax.swing.JLabel bookingIDLabel;
     private javax.swing.JTable bookingTable;
     private javax.swing.JPanel checkAvailabilityPanel;
     private javax.swing.JComboBox<String> checkInCombobox;
@@ -1098,6 +1128,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

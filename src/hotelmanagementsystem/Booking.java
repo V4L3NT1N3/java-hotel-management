@@ -142,6 +142,8 @@ public class Booking {
             for (int i = 0; i < 7; i++) {
                 booking_details[i] = scanner.next();
             }
+            
+            scanner.close();
 
             return booking_details;
 

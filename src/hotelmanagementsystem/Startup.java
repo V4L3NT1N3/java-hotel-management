@@ -45,17 +45,17 @@ public class Startup {
         }
     }
 
-    static void checkBookingDirectory() {
+    static void checkBookingDirectory(String name) {
 
         String currentDirectory = System.getProperty("user.dir");
 
         // Checking and creating booking list directory if it doesn't exist
-        File folder = new File(currentDirectory + "/bookinglist/");
+        File folder = new File(currentDirectory + "/" + name + "/");
         try {
             if (folder.mkdir()) {
-                System.out.println("Booking list directory created");
+                System.out.println( name + " directory created");
             } else {
-                System.out.println("Booking list directory exists");
+                System.out.println( name + " directory exists");
             }
         } catch (Exception e) {
             e.printStackTrace();
