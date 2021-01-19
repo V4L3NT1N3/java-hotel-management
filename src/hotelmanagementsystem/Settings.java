@@ -5,8 +5,6 @@
  */
 package hotelmanagementsystem;
 
-import static hotelmanagementsystem.Startup.checkBookingDirectory;
-import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import java.io.File;
 import java.util.ArrayList;
 

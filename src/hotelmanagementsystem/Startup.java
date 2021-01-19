@@ -45,7 +45,7 @@ public class Startup {
         }
     }
 
-    static void checkBookingDirectory(String name) {
+    static void checkDirectory(String name) {
 
         String currentDirectory = System.getProperty("user.dir");
 

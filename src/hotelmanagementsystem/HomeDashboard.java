@@ -7,9 +7,9 @@ package hotelmanagementsystem;
 
 import static hotelmanagementsystem.Booking.enumerateBookings;
 import static hotelmanagementsystem.Booking.readBooking;
+import static hotelmanagementsystem.Guest.enumerateGuests;
 import static hotelmanagementsystem.Payment.moveFolders;
 import static hotelmanagementsystem.Settings.resetSystem;
-import static hotelmanagementsystem.Startup.checkBookingDirectory;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import static hotelmanagementsystem.Utilities.daysToInt;
 import static hotelmanagementsystem.Utilities.generateRoomNumbers;
@@ -17,7 +17,9 @@ import java.awt.CardLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
@@ -79,6 +81,42 @@ public class HomeDashboard extends javax.swing.JFrame {
         }
 
         availableRoomList.setModel(demoList);
+    }
+
+    public void loadGuestTableContents() {
+
+        // Get file names of each guest in the guest information directory 
+        String[] guestBookingsDirectory = enumerateGuests();
+        int i;
+
+        // Clearing existing table contents first ( otherwise they stack up )
+        DefaultTableModel model = (DefaultTableModel) guestTable.getModel();
+        model.setRowCount(0);
+
+        // Loop through each guest file's contents
+        for (i = 0; i < guestBookingsDirectory.length; i++) {
+
+            try {
+                String[] guest_details = new String[4];
+
+                // Read guests details and store them to an array
+                Scanner scanner = new Scanner(new File(guestBookingsDirectory[i]));
+                for (int j = 0; j < 4; j++) {
+                    guest_details[j] = scanner.next();
+                }
+
+                scanner.close();
+
+                // Display guest details to the guest table 
+                model.addRow(guest_details);
+
+            } catch (Exception e) {
+                System.out.println("Failed to read file");
+            }
+
+            
+        }
+
     }
 
     public void loadTableContents() {
@@ -147,6 +185,13 @@ public class HomeDashboard extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         guestsPanel = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        guestTable = new javax.swing.JTable();
+        jLabel33 = new javax.swing.JLabel();
+        searchTextField1 = new javax.swing.JTextField();
+        jButton13 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
         paymentPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -476,15 +521,106 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         guestsPanel.setBackground(new java.awt.Color(253, 253, 253));
 
+        guestTable.setAutoCreateRowSorter(true);
+        guestTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "IC/Passport No.", "Name", "Email", "Contact"
+            }
+        ));
+        guestTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                guestTablePropertyChange(evt);
+            }
+        });
+        jScrollPane4.setViewportView(guestTable);
+
+        jLabel33.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 128, 128));
+        jLabel33.setText("Guests Information");
+
+        searchTextField1.setText("Search ");
+        searchTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTextField1ActionPerformed(evt);
+            }
+        });
+        searchTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchTextField1KeyReleased(evt);
+            }
+        });
+
+        jButton13.setText("Search");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
+        jButton15.setText("Delete Record");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+
+        jButton16.setText("Edit Record");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout guestsPanelLayout = new javax.swing.GroupLayout(guestsPanel);
         guestsPanel.setLayout(guestsPanelLayout);
         guestsPanelLayout.setHorizontalGroup(
             guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 937, Short.MAX_VALUE)
+            .addGroup(guestsPanelLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(461, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, guestsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton16)
+                .addGap(27, 27, 27)
+                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
+            .addGroup(guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(guestsPanelLayout.createSequentialGroup()
+                    .addGroup(guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(guestsPanelLayout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 897, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, guestsPanelLayout.createSequentialGroup()
+                            .addGap(560, 560, 560)
+                            .addComponent(searchTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton13)
+                            .addGap(27, 27, 27)))
+                    .addGap(20, 20, 20)))
         );
         guestsPanelLayout.setVerticalGroup(
             guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 643, Short.MAX_VALUE)
+            .addGroup(guestsPanelLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton16)
+                    .addComponent(jButton15))
+                .addContainerGap(492, Short.MAX_VALUE))
+            .addGroup(guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(guestsPanelLayout.createSequentialGroup()
+                    .addGap(48, 48, 48)
+                    .addGroup(guestsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(104, 104, 104)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(56, Short.MAX_VALUE)))
         );
 
         homeDashboardPanel.add(guestsPanel, "guestsCard");
@@ -1137,7 +1273,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sideNavigationPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(homeDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+            .addComponent(homeDashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -1152,6 +1288,9 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void guestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "guestsCard");
+
+        // Load guests information from text files 
+        loadGuestTableContents();
     }//GEN-LAST:event_guestButtonActionPerformed
 
     private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
@@ -1428,15 +1567,34 @@ public class HomeDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton14ActionPerformed
 
+    private void guestTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_guestTablePropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_guestTablePropertyChange
+
+    private void searchTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTextField1ActionPerformed
+
+    private void searchTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextField1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTextField1KeyReleased
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton16ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public void main(String args[]) {
-
-        // Check for days and booking directories
-        checkDaysDirectory();
-        checkBookingDirectory("bookinglist");
-        checkBookingDirectory("paidbookings");
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1464,6 +1622,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel durationOfStayLabel;
     private javax.swing.JTextField emailTextBox;
     private javax.swing.JButton guestButton;
+    private javax.swing.JTable guestTable;
     private javax.swing.JPanel guestsPanel;
     private javax.swing.JPanel homeDashboardPanel;
     private javax.swing.JTextField icNumberTextBox;
@@ -1471,7 +1630,10 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1507,6 +1669,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
@@ -1519,6 +1682,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lengthOfStayLabel;
     private javax.swing.JLabel lengthOfStaylabel;
     private javax.swing.JTextField nameTextBox;
@@ -1535,6 +1699,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel roomChargesLabel;
     private javax.swing.JLabel roomNumberLabel;
     private javax.swing.JTextField searchTextField;
+    private javax.swing.JTextField searchTextField1;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JPanel sideNavigationPanel;

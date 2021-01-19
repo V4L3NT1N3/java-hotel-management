@@ -101,8 +101,9 @@ public class Booking {
         // Create new booking file
         try {
             String currentDirectory = System.getProperty("user.dir");
-            String filename = currentDirectory + "/bookinglist/" + booking_id + ".txt";
-            File myObj = new File(filename);
+            String bookingfilename = currentDirectory + "/bookinglist/" + booking_id + ".txt";
+            String guestfilename = currentDirectory + "/guestinformation/" + ic_number + ".txt";
+            File myObj = new File(bookingfilename);
 
             if (myObj.createNewFile()) {
                 System.out.println("Booking file " + booking_id + " created");
@@ -111,10 +112,16 @@ public class Booking {
             }
 
             // Creating a new booking file and writing details to it 
-            FileWriter bookingDetailsWriter = new FileWriter(filename);
+            FileWriter bookingDetailsWriter = new FileWriter(bookingfilename);
             bookingDetailsWriter.write(booking_id + "\n" + ic_number + "\n" + customer_name + "\n" + room_number + "\n" + checkIn + "\n" + checkOut + "\n" + bookedDaysInt.length);
             bookingDetailsWriter.close();
             System.out.println("Successfully wrote to booking file.");
+            
+            // Creating a new booking file and writing details to it 
+            FileWriter guestDetailsWriter = new FileWriter(guestfilename);
+            guestDetailsWriter.write(ic_number + "\n" + customer_name + "\n" + email + "\n" + contact_number);
+            guestDetailsWriter.close();
+            System.out.println("Successfully wrote to guest file.");
 
             // Adding Room Number to the specified booked days            
             for (int i : bookedDaysInt) {
