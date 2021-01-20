@@ -8,18 +8,18 @@ package hotelmanagementsystem;
 import static hotelmanagementsystem.Booking.enumerateBookings;
 import static hotelmanagementsystem.Booking.readBooking;
 import static hotelmanagementsystem.Guest.enumerateGuests;
+import static hotelmanagementsystem.Guest.searchGuest;
 import static hotelmanagementsystem.Payment.moveFolders;
 import static hotelmanagementsystem.Settings.resetSystem;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
+import static hotelmanagementsystem.Startup.checkDirectory;
 import static hotelmanagementsystem.Utilities.daysToInt;
 import static hotelmanagementsystem.Utilities.generateRoomNumbers;
 import java.awt.CardLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
@@ -114,7 +114,6 @@ public class HomeDashboard extends javax.swing.JFrame {
                 System.out.println("Failed to read file");
             }
 
-            
         }
 
     }
@@ -151,6 +150,34 @@ public class HomeDashboard extends javax.swing.JFrame {
             String[] filedata = readBooking(existingBookingsDirectory[i]);
             model.addRow(filedata);
         }
+    }
+    
+     public void fillGuestInformation(String ic_number) {
+
+        String currentDirectory = System.getProperty("user.dir");
+        String guestBookingsDirectory = currentDirectory + "/guestinformation/" + ic_number + ".txt";
+
+
+            try {
+                String[] guest_details = new String[4];
+
+                // Read guests details and store them to an array
+                Scanner scanner = new Scanner(new File(guestBookingsDirectory));
+                for (int j = 0; j < 4; j++) {
+                    guest_details[j] = scanner.next();
+                }
+
+                scanner.close();
+
+                // Display guest details to the guest table 
+                nameTextBox.setText(guest_details[1]);
+                contactTextBox.setText(guest_details[2]);
+                emailTextBox.setText(guest_details[3]);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
     }
 
     /**
@@ -205,6 +232,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         settingsPanel = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
         checkAvailabilityPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -740,10 +768,17 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel32.setForeground(new java.awt.Color(0, 128, 128));
         jLabel32.setText("Settings");
 
-        jButton9.setText("Reset System ");
+        jButton9.setText("Clear System");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
+            }
+        });
+
+        resetButton.setText("Reset System ");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
             }
         });
 
@@ -757,18 +792,22 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addGap(86, 86, 86)
                         .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(settingsPanelLayout.createSequentialGroup()
-                        .addGap(334, 334, 334)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(359, Short.MAX_VALUE))
+                        .addGap(154, 154, 154)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81)
+                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(156, 156, 156))
+                .addGap(190, 190, 190)
+                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
 
         homeDashboardPanel.add(settingsPanel, "settingsCard");
@@ -895,6 +934,11 @@ public class HomeDashboard extends javax.swing.JFrame {
         });
 
         icNumberTextBox.setText("IC No.");
+        icNumberTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                icNumberTextBoxFocusLost(evt);
+            }
+        });
         icNumberTextBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 icNumberTextBoxActionPerformed(evt);
@@ -1349,7 +1393,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_nameTextBoxActionPerformed
 
     private void icNumberTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_icNumberTextBoxActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_icNumberTextBoxActionPerformed
 
     private void emailTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextBoxActionPerformed
@@ -1461,10 +1505,10 @@ public class HomeDashboard extends javax.swing.JFrame {
         resetSystem("bookinglist");
         resetSystem("paidbookings");
 
-        // Check for days and booking directories
+        // Check for days and bookinglist and paidbookings directories
         checkDaysDirectory();
-        checkBookingDirectory("bookinglist");
-        checkBookingDirectory("paidbookings");
+        checkDirectory("bookinglist");
+        checkDirectory("paidbookings");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
@@ -1516,7 +1560,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         int option = JOptionPane.showConfirmDialog(
                 homeDashboardPanel,
                 "Confirm delete action?",
-                "An Inane Question",
+                "Confirm delete",
                 JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
@@ -1590,6 +1634,43 @@ public class HomeDashboard extends javax.swing.JFrame {
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+
+        // Delete all existing folder data
+        resetSystem("bookingdays");
+        resetSystem("bookinglist");
+        resetSystem("paidbookings");
+        resetSystem("guestinformation");
+
+        // Recreate all necessary system directories
+        checkDaysDirectory();
+        checkDirectory("bookinglist");
+        checkDirectory("paidbookings");
+        checkDirectory("guestinformation");
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void icNumberTextBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_icNumberTextBoxFocusLost
+
+        String ic_number = icNumberTextBox.getText().trim();
+
+        boolean existing_guests = searchGuest(ic_number);
+        
+        System.out.println(ic_number);
+        System.out.println(existing_guests);
+
+        if (existing_guests == true) {
+
+            int option = JOptionPane.showConfirmDialog(
+                homeDashboardPanel,
+                "Existing guest found. Would you like to autofill ?",
+                "Autofill guests",
+                JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                fillGuestInformation(ic_number);
+            }
+        }
+    }//GEN-LAST:event_icNumberTextBoxFocusLost
 
     /**
      * @param args the command line arguments
@@ -1696,6 +1777,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField queryTextField;
     private javax.swing.JButton reservationsButton;
     private javax.swing.JPanel reservationsPanel;
+    private javax.swing.JButton resetButton;
     private javax.swing.JLabel roomChargesLabel;
     private javax.swing.JLabel roomNumberLabel;
     private javax.swing.JTextField searchTextField;
