@@ -106,7 +106,7 @@ public class Login extends javax.swing.JFrame {
         String username = usernameLabel.getText();
         String password = passwordLabel.getText();
 
-        if (username.equals("admin") && password.equals("admin")){
+        if (username.trim().equals("admin") && password.trim().equals("admin")){
             new HomeDashboard().setVisible(true);
             this.setVisible(false);
         } else {

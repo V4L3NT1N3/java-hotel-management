@@ -151,32 +151,31 @@ public class HomeDashboard extends javax.swing.JFrame {
             model.addRow(filedata);
         }
     }
-    
-     public void fillGuestInformation(String ic_number) {
+
+    public void fillGuestInformation(String ic_number) {
 
         String currentDirectory = System.getProperty("user.dir");
         String guestBookingsDirectory = currentDirectory + "/guestinformation/" + ic_number + ".txt";
 
+        try {
+            String[] guest_details = new String[4];
 
-            try {
-                String[] guest_details = new String[4];
-
-                // Read guests details and store them to an array
-                Scanner scanner = new Scanner(new File(guestBookingsDirectory));
-                for (int j = 0; j < 4; j++) {
-                    guest_details[j] = scanner.next();
-                }
-
-                scanner.close();
-
-                // Display guest details to the guest table 
-                nameTextBox.setText(guest_details[1]);
-                contactTextBox.setText(guest_details[2]);
-                emailTextBox.setText(guest_details[3]);
-
-            } catch (Exception e) {
-                System.out.println(e);
+            // Read guests details and store them to an array
+            Scanner scanner = new Scanner(new File(guestBookingsDirectory));
+            for (int j = 0; j < 4; j++) {
+                guest_details[j] = scanner.next();
             }
+
+            scanner.close();
+
+            // Display guest details to the guest table 
+            nameTextBox.setText(guest_details[1]);
+            contactTextBox.setText(guest_details[3]);
+            emailTextBox.setText(guest_details[2]);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
     }
 
@@ -211,6 +210,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         bookingTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
         guestsPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         guestTable = new javax.swing.JTable();
@@ -429,7 +429,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 128, 128));
         jLabel1.setText("Reservations");
 
-        searchTextField.setText("Search ");
+        searchTextField.setText("Search Booking ID");
         searchTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchTextFieldActionPerformed(evt);
@@ -497,6 +497,13 @@ public class HomeDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton17.setText("Edit Record");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout reservationsPanelLayout = new javax.swing.GroupLayout(reservationsPanel);
         reservationsPanel.setLayout(reservationsPanelLayout);
         reservationsPanelLayout.setHorizontalGroup(
@@ -504,25 +511,24 @@ public class HomeDashboard extends javax.swing.JFrame {
             .addGroup(reservationsPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 897, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reservationsPanelLayout.createSequentialGroup()
-                .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(104, 104, 104)
+                .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(reservationsPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
                     .addGroup(reservationsPanelLayout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(reservationsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addGroup(reservationsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
                 .addGap(37, 37, 37))
         );
         reservationsPanelLayout.setVerticalGroup(
@@ -535,14 +541,14 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(14, 14, 14)
-                .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(1, 1, 1)
-                .addComponent(jButton10)
-                .addGap(18, 18, 18)
+                    .addComponent(jButton10)
+                    .addComponent(jButton1)
+                    .addComponent(jButton17))
+                .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         homeDashboardPanel.add(reservationsPanel, "reservationsCard");
@@ -843,11 +849,6 @@ public class HomeDashboard extends javax.swing.JFrame {
             }
         });
 
-        availableRoomList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         availableRoomList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(availableRoomList);
 
@@ -1371,20 +1372,36 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_checkOutComboboxActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        cardLayout.show(homeDashboardPanel, "confirmBookingPanel");
 
-        // Pass selected check in and check out days
-        String check_in = checkInCombobox.getSelectedItem().toString();
-        String check_out = checkOutCombobox.getSelectedItem().toString();
-        String length_stay = check_in + " - " + check_out;
-        lengthOfStayLabel.setText(length_stay);
+        if (checkOutCombobox.getSelectedIndex() < checkInCombobox.getSelectedIndex()) {
+            // Validate day selection to make sure check in is before check out
+            JOptionPane.showMessageDialog(homeDashboardPanel, "Check in cannot be after check out date. Please recheck your selection.");
+        } else if (availableRoomList.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(homeDashboardPanel, "Please select a room.");
+        } else {
 
-        // Psss calculated stay duration 
-        int stay_duration = 1 + (checkOutCombobox.getSelectedIndex() - checkInCombobox.getSelectedIndex());
-        durationOfStayLabel.setText(Integer.toString(stay_duration));
+            cardLayout.show(homeDashboardPanel, "confirmBookingPanel");
 
-        // Pass selected room number
-        roomNumberLabel.setText(availableRoomList.getSelectedValue());
+            // Pass selected check in and check out days
+            String check_in = checkInCombobox.getSelectedItem().toString();
+            String check_out = checkOutCombobox.getSelectedItem().toString();
+            String length_stay = check_in + " - " + check_out;
+            lengthOfStayLabel.setText(length_stay);
+
+            // Psss calculated stay duration 
+            int stay_duration = 1 + (checkOutCombobox.getSelectedIndex() - checkInCombobox.getSelectedIndex());
+            durationOfStayLabel.setText(Integer.toString(stay_duration));
+
+            // Pass selected room number
+            roomNumberLabel.setText(availableRoomList.getSelectedValue());
+
+            // Clear room list 
+            DefaultListModel model = new DefaultListModel();
+            model.removeAllElements();
+            availableRoomList.setModel(model);
+
+        }
+
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -1406,29 +1423,45 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-        // String to int conversion
-        String ic_number = icNumberTextBox.getText();
-        String contact = contactTextBox.getText();
+        try {
 
-        // Generate booking ID
-        Random rand = new Random();
-        int number = rand.nextInt(999999);
-        String number_string = Integer.toString(number);
-        String booking_id = "#" + number_string;
+            // String to int conversion
+            String ic_number = icNumberTextBox.getText();
+            String contact = contactTextBox.getText();
 
-        // Creating new booking object 
-        Booking newbooking = new Booking();
-        newbooking.setBookingID(booking_id);
-        newbooking.setICNumber(Integer.valueOf(ic_number));
-        newbooking.setCustomerName(nameTextBox.getText());
-        newbooking.setCustomerEmail(emailTextBox.getText());
-        newbooking.setContactNumber(Integer.valueOf(contact));
-        newbooking.setRoomNumber(roomNumberLabel.getText());
-        newbooking.setCheckIn(checkInCombobox.getSelectedItem().toString());
-        newbooking.setCheckOut(checkOutCombobox.getSelectedItem().toString());
-        newbooking.setBookedDaysInt(daysToInt(checkInCombobox.getSelectedIndex(), checkOutCombobox.getSelectedIndex()));
+            // Generate booking ID
+            Random rand = new Random();
+            int number = rand.nextInt(999999);
+            String number_string = Integer.toString(number);
+            String booking_id = "#" + number_string;
 
-        newbooking.bookRoom();
+            // Creating new booking object 
+            Booking newbooking = new Booking();
+            newbooking.setBookingID(booking_id);
+            newbooking.setICNumber(Integer.valueOf(ic_number));
+            newbooking.setCustomerName(nameTextBox.getText());
+            newbooking.setCustomerEmail(emailTextBox.getText());
+            newbooking.setContactNumber(Integer.valueOf(contact));
+            newbooking.setRoomNumber(roomNumberLabel.getText());
+            newbooking.setCheckIn(checkInCombobox.getSelectedItem().toString());
+            newbooking.setCheckOut(checkOutCombobox.getSelectedItem().toString());
+            newbooking.setBookedDaysInt(daysToInt(checkInCombobox.getSelectedIndex(), checkOutCombobox.getSelectedIndex()));
+
+            newbooking.bookRoom();
+
+            // Clear old booking data 
+            icNumberTextBox.setText("");
+            nameTextBox.setText("");
+            emailTextBox.setText("");
+            contactTextBox.setText("");
+
+            // Redirect to home page , to prevent a second booking wihtout validation
+            JOptionPane.showMessageDialog(homeDashboardPanel, "Booking added succesfully !");
+            cardLayout.show(homeDashboardPanel, "reservationsCard");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(homeDashboardPanel, "Invalid details ! Please recheck information entered.");
+        }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -1471,25 +1504,35 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
 
-        // Move paid bookings to the paidbooking folder
         try {
-            moveFolders(bookingIDLabel.getText());
-        } catch (IOException ex) {
-            System.out.println(ex);
+
+            int paid_amount = Integer.parseInt(paymentAmountTextField.getText());
+            int room_charges = Integer.parseInt(lengthOfStaylabel.getText()) * 350;
+
+            if (paid_amount < room_charges) {
+                JOptionPane.showMessageDialog(homeDashboardPanel, "Insufficient payment amount made.");
+            } else {
+                // Confirm payment if amount paid is sufficient
+                cardLayout.show(homeDashboardPanel, "paymentreceiptCard");
+
+                // Move paid bookings to the paidbooking folder
+                try {
+                    moveFolders(bookingIDLabel.getText());
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+
+                // Pass variables to receipt page 
+                bookingIDLabel_Payment.setText(bookingIDLabel.getText());
+                amountPaidLabel_Payment.setText("RM " + paymentAmountTextField.getText());
+
+                // Calculate and display change 
+                int change = paid_amount - room_charges;
+                changeAmountLabel.setText("RM " + String.valueOf(change));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(homeDashboardPanel, "Invalid amount entered.");
         }
-
-        // Confirm payment if amount paid is sufficient
-        cardLayout.show(homeDashboardPanel, "paymentreceiptCard");
-
-        // Pass variables to receipt page 
-        bookingIDLabel_Payment.setText(bookingIDLabel.getText());
-        amountPaidLabel_Payment.setText("RM " + paymentAmountTextField.getText());
-
-        // Calculate and display change 
-        int paid_amount = Integer.parseInt(paymentAmountTextField.getText());
-        int room_charges = Integer.parseInt(lengthOfStaylabel.getText()) * 350;
-        int change = paid_amount - room_charges;
-        changeAmountLabel.setText("RM " + String.valueOf(change));
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -1529,7 +1572,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         int option = JOptionPane.showConfirmDialog(
                 homeDashboardPanel,
                 "Confirm delete action?",
-                "An Inane Question",
+                "Confirm delete",
                 JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
@@ -1655,22 +1698,23 @@ public class HomeDashboard extends javax.swing.JFrame {
         String ic_number = icNumberTextBox.getText().trim();
 
         boolean existing_guests = searchGuest(ic_number);
-        
-        System.out.println(ic_number);
-        System.out.println(existing_guests);
 
         if (existing_guests == true) {
 
             int option = JOptionPane.showConfirmDialog(
-                homeDashboardPanel,
-                "Existing guest found. Would you like to autofill ?",
-                "Autofill guests",
-                JOptionPane.YES_NO_OPTION);
+                    homeDashboardPanel,
+                    "Existing guest found. Would you like to autofill ?",
+                    "Autofill guests",
+                    JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 fillGuestInformation(ic_number);
             }
         }
     }//GEN-LAST:event_icNumberTextBoxFocusLost
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton17ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1715,6 +1759,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

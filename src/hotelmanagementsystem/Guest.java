@@ -52,7 +52,7 @@ public class Guest {
           String currentDirectory = System.getProperty("user.dir");
           String guest_path = currentDirectory + "/guestinformation/" + IC + ".txt";
           
-          boolean record_exists = true;
+          boolean record_exists = false;
           
           // Loop through all files to check for matchng records
           for (int i = 0; i < existing_guests.length; i++){
