@@ -9,7 +9,6 @@ import static hotelmanagementsystem.Booking.enumerateBookings;
 import static hotelmanagementsystem.Booking.readBooking;
 import static hotelmanagementsystem.Guest.enumerateGuests;
 import static hotelmanagementsystem.Guest.searchGuest;
-import static hotelmanagementsystem.Payment.moveFolders;
 import static hotelmanagementsystem.Settings.resetSystem;
 import static hotelmanagementsystem.Startup.checkDaysDirectory;
 import static hotelmanagementsystem.Startup.checkDirectory;
@@ -227,8 +226,6 @@ public class HomeDashboard extends javax.swing.JFrame {
         addPaymentButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         paymentTable = new javax.swing.JTable();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
@@ -714,20 +711,6 @@ public class HomeDashboard extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(paymentTable);
 
-        jButton11.setText("Delete Record");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
-        jButton12.setText("Edit Record");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout paymentPanelLayout = new javax.swing.GroupLayout(paymentPanel);
         paymentPanel.setLayout(paymentPanelLayout);
         paymentPanelLayout.setHorizontalGroup(
@@ -737,18 +720,13 @@ public class HomeDashboard extends javax.swing.JFrame {
                 .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
                 .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(paymentPanelLayout.createSequentialGroup()
                         .addComponent(queryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5))
-                    .addGroup(paymentPanelLayout.createSequentialGroup()
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton11)
-                        .addGap(18, 18, 18)
-                        .addComponent(addPaymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(addPaymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59))
             .addGroup(paymentPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
@@ -766,10 +744,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(paymentPanelLayout.createSequentialGroup()
                         .addGap(57, 57, 57)
-                        .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton12)
-                            .addComponent(jButton11)
-                            .addComponent(addPaymentButton)))
+                        .addComponent(addPaymentButton))
                     .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(queryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -910,12 +885,11 @@ public class HomeDashboard extends javax.swing.JFrame {
             .addGroup(checkAvailabilityPanelLayout.createSequentialGroup()
                 .addContainerGap(227, Short.MAX_VALUE)
                 .addGroup(checkAvailabilityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, checkAvailabilityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(checkAvailabilityPanelLayout.createSequentialGroup()
-                            .addGap(153, 153, 153)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(314, 314, 314))
-                        .addGroup(checkAvailabilityPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, checkAvailabilityPanelLayout.createSequentialGroup()
+                        .addGroup(checkAvailabilityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(checkAvailabilityPanelLayout.createSequentialGroup()
+                                .addGap(153, 153, 153)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(checkAvailabilityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, checkAvailabilityPanelLayout.createSequentialGroup()
@@ -926,8 +900,8 @@ public class HomeDashboard extends javax.swing.JFrame {
                                     .addGroup(checkAvailabilityPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(checkInCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(checkOutCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(69, 69, 69)))
-                            .addGap(205, 205, 205)))
+                                    .addGap(69, 69, 69))))
+                        .addGap(205, 205, 205))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, checkAvailabilityPanelLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(229, 229, 229))))
@@ -1061,34 +1035,39 @@ public class HomeDashboard extends javax.swing.JFrame {
         customerInfoPanelLayout.setHorizontalGroup(
             customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(customerInfoPanelLayout.createSequentialGroup()
+                .addGap(72, 72, 72)
                 .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerInfoPanelLayout.createSequentialGroup()
+                            .addGap(17, 17, 17)
+                            .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(icNumberTextBox)
+                                .addComponent(contactTextBox, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                            .addGap(76, 76, 76)
+                            .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(nameTextBox, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                                .addComponent(emailTextBox))))
                     .addGroup(customerInfoPanelLayout.createSequentialGroup()
-                        .addGap(72, 72, 72)
                         .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerInfoPanelLayout.createSequentialGroup()
-                                    .addGap(17, 17, 17)
-                                    .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(icNumberTextBox)
-                                        .addComponent(contactTextBox, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
-                                    .addGap(76, 76, 76)
-                                    .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(nameTextBox, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                                        .addComponent(emailTextBox))))
+                            .addComponent(jLabel9)
                             .addGroup(customerInfoPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel9)
+                                .addGap(60, 60, 60)
+                                .addComponent(roomNumberLabel)))
+                        .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(customerInfoPanelLayout.createSequentialGroup()
                                 .addGap(185, 185, 185)
                                 .addComponent(jLabel11)
-                                .addGap(94, 94, 94)
-                                .addComponent(jLabel15))))
-                    .addGroup(customerInfoPanelLayout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(roomNumberLabel)
-                        .addGap(275, 275, 275)
-                        .addComponent(lengthOfStayLabel)
-                        .addGap(177, 177, 177)
-                        .addComponent(durationOfStayLabel)))
+                                .addGap(94, 94, 94))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerInfoPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lengthOfStayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(86, 86, 86)))
+                        .addGroup(customerInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addGroup(customerInfoPanelLayout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(durationOfStayLabel)))))
                 .addContainerGap(115, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerInfoPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -1662,7 +1641,7 @@ public class HomeDashboard extends javax.swing.JFrame {
             // Check if any payment record ws selected
             JOptionPane.showMessageDialog(homeDashboardPanel, "Please select a payment record.");
         } else {
-            
+
             cardLayout.show(homeDashboardPanel, "paymentDetailsCard");
 
             // Get selected row 
@@ -1690,18 +1669,20 @@ public class HomeDashboard extends javax.swing.JFrame {
 
         try {
 
+            // Calculating room charges and getting payment amount from textbox
             int paid_amount = Integer.parseInt(paymentAmountTextField.getText());
             int room_charges = Integer.parseInt(lengthOfStaylabel.getText()) * 350;
 
-            if (paid_amount < room_charges) {
-                JOptionPane.showMessageDialog(homeDashboardPanel, "Insufficient payment amount made.");
-            } else {
+            Payment newPayment = new Payment(bookingIDLabel.getText());
+            boolean isSufficient = newPayment.checkPaymentAmount(paid_amount, room_charges);
+
+            if (isSufficient == true) {
                 // Confirm payment if amount paid is sufficient
                 cardLayout.show(homeDashboardPanel, "paymentreceiptCard");
 
                 // Move paid bookings to the paidbooking folder
                 try {
-                    moveFolders(bookingIDLabel.getText());
+                   newPayment.moveFolders();
                 } catch (IOException ex) {
                     System.out.println(ex);
                 }
@@ -1713,7 +1694,10 @@ public class HomeDashboard extends javax.swing.JFrame {
                 // Calculate and display change 
                 int change = paid_amount - room_charges;
                 changeAmountLabel.setText("RM " + String.valueOf(change));
+            } else {
+                JOptionPane.showMessageDialog(null, "Insufficient payment amount made.");
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(homeDashboardPanel, "Invalid amount entered.");
         }
@@ -1727,15 +1711,26 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
 
-        // Delete all existing folder data
-        resetSystem("bookingdays");
-        resetSystem("bookinglist");
-        resetSystem("paidbookings");
+        // Confirm clear system action
+        int option = JOptionPane.showConfirmDialog(
+                homeDashboardPanel,
+                "Confirm clear system ? This action is irreversible.?",
+                "Confirm clear system",
+                JOptionPane.YES_NO_OPTION);
 
-        // Check for days and bookinglist and paidbookings directories
-        checkDaysDirectory();
-        checkDirectory("bookinglist");
-        checkDirectory("paidbookings");
+        if (option == JOptionPane.YES_OPTION) {
+
+            // Delete all existing folder data
+            resetSystem("bookingdays");
+            resetSystem("bookinglist");
+            resetSystem("paidbookings");
+
+            // Check for days and bookinglist and paidbookings directories
+            checkDaysDirectory();
+            checkDirectory("bookinglist");
+            checkDirectory("paidbookings");
+
+        }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
@@ -1781,59 +1776,6 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-
-        // Confirm delete action
-        int option = JOptionPane.showConfirmDialog(
-                homeDashboardPanel,
-                "Confirm delete action?",
-                "Confirm delete",
-                JOptionPane.YES_NO_OPTION);
-
-        if (option == JOptionPane.YES_OPTION) {
-
-            // Get selected row 
-            int row = paymentTable.getSelectedRow();
-
-            // Concantenate selected file directory based on selected bookingID
-            String bookingID = paymentTable.getModel().getValueAt(row, 0).toString();
-            String currentDirectory = System.getProperty("user.dir");
-
-            // Delete selected booking file 
-            try {
-                File selectedFile = new File(currentDirectory + "/bookinglist/" + bookingID + ".txt");
-                selectedFile.delete();
-                System.out.println(bookingID + " deleted");
-
-            } catch (Exception e) {
-                System.out.println("Unable to delete files");
-            }
-
-        }
-
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-
-        // Get selected row 
-        int row = paymentTable.getSelectedRow();
-
-        // Concantenate selected file directory based on selected bookingID
-        String bookingID = paymentTable.getModel().getValueAt(row, 0).toString();
-        String currentDirectory = System.getProperty("user.dir");
-
-        // Delete selected booking file 
-        try {
-            File selectedFile = new File(currentDirectory + "/bookinglist/" + bookingID + ".txt");
-            selectedFile.delete();
-            System.out.println(bookingID + " deleted");
-
-        } catch (Exception e) {
-            System.out.println("Unable to delete files");
-        }
-
-    }//GEN-LAST:event_jButton12ActionPerformed
-
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton14ActionPerformed
@@ -1864,17 +1806,30 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
 
-        // Delete all existing folder data
-        resetSystem("bookingdays");
-        resetSystem("bookinglist");
-        resetSystem("paidbookings");
-        resetSystem("guestinformation");
+        // Confirm reset system action
+        int option = JOptionPane.showConfirmDialog(
+                homeDashboardPanel,
+                "Confirm reset system ? This action is irreversible.",
+                "Confirm reset system",
+                JOptionPane.YES_NO_OPTION);
 
-        // Recreate all necessary system directories
-        checkDaysDirectory();
-        checkDirectory("bookinglist");
-        checkDirectory("paidbookings");
-        checkDirectory("guestinformation");
+        if (option == JOptionPane.YES_OPTION) {
+
+            // Delete all existing folder data
+            resetSystem("bookingdays");
+            resetSystem("bookinglist");
+            resetSystem("paidbookings");
+            resetSystem("guestinformation");
+
+            // Recreate all necessary system directories
+            checkDaysDirectory();
+            checkDirectory("bookinglist");
+            checkDirectory("paidbookings");
+            checkDirectory("guestinformation");
+
+        }
+
+
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void icNumberTextBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_icNumberTextBoxFocusLost
@@ -1938,8 +1893,6 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField icNumberTextBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
