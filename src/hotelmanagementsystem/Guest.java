@@ -9,7 +9,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Guest {
+public class Guest implements IOProcess {
+    private String guestID;
+    
+    public String getGuestID() {
+        return guestID;
+    }
+
+    public void setguestID(String guest_id) {
+        this.guestID = guest_id;
+    }
     
       public static String[] enumerateGuests() {
         try {
@@ -70,4 +79,23 @@ public class Guest {
           return record_exists;
           
       }
+
+    @Override
+    public void deleteRecord() {
+        String currentDirectory = System.getProperty("user.dir");
+
+            try {
+                File selectedFile = new File(currentDirectory + "/guestinformation/" + guestID + ".txt");
+                selectedFile.delete();
+                System.out.println(guestID + " deleted");
+
+            } catch (Exception e) {
+                System.out.println("Unable to delete files");
+            }
+    }
+    
+    @Override
+    public void EditRecord() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

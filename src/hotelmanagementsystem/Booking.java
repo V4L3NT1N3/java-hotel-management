@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Booking {
+public class Booking implements IOProcess{
 
     private String booking_id;
     private int ic_number;
@@ -190,6 +190,25 @@ public class Booking {
         }
 
         return null;
+    }
+
+    @Override
+    public void deleteRecord() {
+        String currentDirectory = System.getProperty("user.dir");
+
+            try {
+                File selectedFile = new File(currentDirectory + "/bookinglist/" + booking_id + ".txt");
+                selectedFile.delete();
+                System.out.println(booking_id + " deleted");
+
+            } catch (Exception e) {
+                System.out.println("Unable to delete files");
+            }
+    }
+
+    @Override
+    public void EditRecord() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

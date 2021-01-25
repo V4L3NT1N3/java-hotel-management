@@ -1682,7 +1682,7 @@ public class HomeDashboard extends javax.swing.JFrame {
 
                 // Move paid bookings to the paidbooking folder
                 try {
-                   newPayment.moveFolders();
+                    newPayment.moveFolders();
                 } catch (IOException ex) {
                     System.out.println(ex);
                 }
@@ -1729,6 +1729,8 @@ public class HomeDashboard extends javax.swing.JFrame {
             checkDaysDirectory();
             checkDirectory("bookinglist");
             checkDirectory("paidbookings");
+            
+            JOptionPane.showMessageDialog(null, "System cleared succesfully");
 
         }
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -1747,32 +1749,29 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
 
-        // Confirm delete action
-        int option = JOptionPane.showConfirmDialog(
-                homeDashboardPanel,
-                "Confirm delete action?",
-                "Confirm delete",
-                JOptionPane.YES_NO_OPTION);
+        if (bookingTable.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(homeDashboardPanel, "No record selected !");
+        } else {
+            // Confirm delete action
+            int option = JOptionPane.showConfirmDialog(
+                    homeDashboardPanel,
+                    "Confirm delete action?",
+                    "Confirm delete",
+                    JOptionPane.YES_NO_OPTION);
 
-        if (option == JOptionPane.YES_OPTION) {
+            if (option == JOptionPane.YES_OPTION) {
 
-            // Get selected row 
-            int row = bookingTable.getSelectedRow();
+                // Get selected row's bookingID
+                int row = bookingTable.getSelectedRow();
+                String bookingID = bookingTable.getModel().getValueAt(row, 0).toString();
 
-            // Concantenate selected file directory based on selected bookingID
-            String bookingID = bookingTable.getModel().getValueAt(row, 0).toString();
-            String currentDirectory = System.getProperty("user.dir");
-
-            try {
-                File selectedFile = new File(currentDirectory + "/bookinglist/" + bookingID + ".txt");
-                selectedFile.delete();
-                System.out.println(bookingID + " deleted");
-
-            } catch (Exception e) {
-                System.out.println("Unable to delete files");
+                // Create new bookign object and call its deleteRecord() method
+                Booking deletedBooking = new Booking();
+                deletedBooking.setBookingID(bookingID);
+                deletedBooking.deleteRecord();
             }
-
         }
+
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -1797,11 +1796,39 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
+
+        if (guestTable.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(homeDashboardPanel, "No record selected !");
+        } else {
+            // Confirm delete action
+            int option = JOptionPane.showConfirmDialog(
+                    homeDashboardPanel,
+                    "Confirm delete action?",
+                    "Confirm delete",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (option == JOptionPane.YES_OPTION) {
+
+                // Get selected row's bookingID
+                int row = guestTable.getSelectedRow();
+                String guestID = guestTable.getModel().getValueAt(row, 0).toString();
+
+                // Create new bookign object and call its deleteRecord() method
+                Guest deletedGuest = new Guest();
+                deletedGuest.setguestID(guestID);
+                deletedGuest.deleteRecord();
+
+            }
+        }
+
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        // TODO add your handling code here:
+        if (guestTable.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(homeDashboardPanel, "No record selected !");
+        } else {
+            // add edit code here
+        }
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
@@ -1827,6 +1854,8 @@ public class HomeDashboard extends javax.swing.JFrame {
             checkDirectory("paidbookings");
             checkDirectory("guestinformation");
 
+            JOptionPane.showMessageDialog(null, "System reset succesfully");
+            
         }
 
 
@@ -1852,7 +1881,11 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_icNumberTextBoxFocusLost
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // TODO add your handling code here:
+        if (bookingTable.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(homeDashboardPanel, "No record selected !");
+        } else {
+            // add edit code here
+        }
     }//GEN-LAST:event_jButton17ActionPerformed
 
     /**
