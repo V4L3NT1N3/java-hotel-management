@@ -5,7 +5,11 @@
         <group>
             <file>file:/D:/Documents/GitHub/javahotelmanagement/src/hotelmanagementsystem/Payment.java</file>
             <file>file:/D:/Documents/GitHub/javahotelmanagement/src/hotelmanagementsystem/Booking.java</file>
+            <file>file:/D:/Documents/GitHub/javahotelmanagement/src/hotelmanagementsystem/Utilities.java</file>
+            <file>file:/D:/Documents/GitHub/javahotelmanagement/src/hotelmanagementsystem/IOProcess.java</file>
+            <file>file:/D:/Documents/GitHub/javahotelmanagement/src/hotelmanagementsystem/Guest.java</file>
             <file>file:/D:/Documents/GitHub/javahotelmanagement/src/hotelmanagementsystem/HomeDashboard.java</file>
+            <file>file:/D:/Documents/GitHub/javahotelmanagement/src/hotelmanagementsystem/Login.java</file>
         </group>
     </open-files>
 </project-private>
