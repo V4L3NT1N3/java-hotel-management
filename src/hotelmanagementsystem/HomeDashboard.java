@@ -199,7 +199,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         paymentButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         jLabel34 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         homeDashboardPanel = new javax.swing.JPanel();
         reservationsPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -393,7 +393,7 @@ public class HomeDashboard extends javax.swing.JFrame {
         jLabel34.setForeground(new java.awt.Color(253, 253, 253));
         jLabel34.setText("Space Hotel");
 
-        jLabel40.setIcon(new javax.swing.ImageIcon("C:\\Users\\Anonymous\\Desktop\\baseline_domain_white_18dp.png")); // NOI18N
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotelmanagementsystem/logo.png"))); // NOI18N
 
         javax.swing.GroupLayout sideNavigationPanelLayout = new javax.swing.GroupLayout(sideNavigationPanel);
         sideNavigationPanel.setLayout(sideNavigationPanelLayout);
@@ -410,25 +410,25 @@ public class HomeDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel34)
                         .addGap(40, 40, 40))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideNavigationPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel40)
-                        .addGap(77, 77, 77))))
+                        .addComponent(jLabel22)
+                        .addGap(78, 78, 78))))
         );
         sideNavigationPanelLayout.setVerticalGroup(
             sideNavigationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sideNavigationPanelLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel40)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(62, 62, 62)
                 .addComponent(jLabel34)
-                .addGap(55, 55, 55)
-                .addComponent(reservationsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(37, 37, 37)
-                .addComponent(guestButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel22)
+                .addGap(35, 35, 35)
+                .addComponent(reservationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(guestButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(41, 41, 41)
                 .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(181, 181, 181))
+                .addGap(172, 172, 172))
         );
 
         homeDashboardPanel.setBackground(new java.awt.Color(253, 253, 253));
@@ -1292,8 +1292,7 @@ public class HomeDashboard extends javax.swing.JFrame {
                             .addComponent(customerICLabel)
                             .addComponent(bookingIDLabel)
                             .addComponent(customerNameLabel)
-                            .addComponent(lengthOfStaylabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lengthOfStaylabel)))
                     .addGroup(paymentDetailsPanelLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1947,6 +1946,7 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -1965,7 +1965,6 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
