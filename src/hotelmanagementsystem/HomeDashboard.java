@@ -209,7 +209,6 @@ public class HomeDashboard extends javax.swing.JFrame {
         bookingTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
         guestsPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         guestTable = new javax.swing.JTable();
@@ -498,17 +497,10 @@ public class HomeDashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton10.setText("Delete Record");
+        jButton10.setText("Delete Reservation");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
-            }
-        });
-
-        jButton17.setText("Edit Record");
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
             }
         });
 
@@ -524,18 +516,15 @@ public class HomeDashboard extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(reservationsPanelLayout.createSequentialGroup()
-                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(reservationsPanelLayout.createSequentialGroup()
-                        .addGap(55, 55, 55)
                         .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2))
+                    .addGroup(reservationsPanelLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton10)))
                 .addGap(50, 50, 50))
         );
         reservationsPanelLayout.setVerticalGroup(
@@ -549,9 +538,8 @@ public class HomeDashboard extends javax.swing.JFrame {
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
                         .addGroup(reservationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton10)
                             .addComponent(jButton1)
-                            .addComponent(jButton17)))
+                            .addComponent(jButton10)))
                     .addGroup(reservationsPanelLayout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -572,7 +560,15 @@ public class HomeDashboard extends javax.swing.JFrame {
             new String [] {
                 "IC/Passport No.", "Name", "Email", "Contact"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         guestTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 guestTablePropertyChange(evt);
@@ -731,18 +727,18 @@ public class HomeDashboard extends javax.swing.JFrame {
             paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paymentPanelLayout.createSequentialGroup()
                 .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paymentPanelLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69))
                     .addGroup(paymentPanelLayout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addGroup(paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(queryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
-                        .addComponent(addPaymentButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(addPaymentButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paymentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)))
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(61, Short.MAX_VALUE))
         );
@@ -1723,7 +1719,7 @@ public class HomeDashboard extends javax.swing.JFrame {
             checkDaysDirectory();
             checkDirectory("bookinglist");
             checkDirectory("paidbookings");
-            
+
             JOptionPane.showMessageDialog(null, "System cleared succesfully");
 
         }
@@ -1786,7 +1782,13 @@ public class HomeDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_searchTextField1KeyReleased
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) guestTable.getModel();
+        TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<DefaultTableModel>(model);
+        guestTable.setRowSorter(rowSorter);
+
+        // Get search query and filter the table based on the query 
+        String query = searchTextField1.getText();
+        rowSorter.setRowFilter(RowFilter.regexFilter(query));
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
@@ -1821,8 +1823,25 @@ public class HomeDashboard extends javax.swing.JFrame {
         if (guestTable.getSelectionModel().isSelectionEmpty()) {
             JOptionPane.showMessageDialog(homeDashboardPanel, "No record selected !");
         } else {
-            // add edit code here
+            // Get selected row's information
+            int row = guestTable.getSelectedRow();
+            String guestID = guestTable.getModel().getValueAt(row, 0).toString();
+            String custname = guestTable.getModel().getValueAt(row, 1).toString();
+            String custemail = guestTable.getModel().getValueAt(row, 2).toString();
+            String custcontact = guestTable.getModel().getValueAt(row, 3).toString();
+
+            // Create new guest object and call the EditRecord method 
+            Guest editedGuest = new Guest();
+            editedGuest.setguestID(guestID);
+            editedGuest.setCustomerName(custname);
+            editedGuest.setCustomerEmail(custemail);
+            editedGuest.setContactNumber(custcontact);
+            
+            editedGuest.EditRecord();
+            
+            JOptionPane.showMessageDialog(homeDashboardPanel, "Record updated !");
         }
+
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
@@ -1849,7 +1868,7 @@ public class HomeDashboard extends javax.swing.JFrame {
             checkDirectory("guestinformation");
 
             JOptionPane.showMessageDialog(null, "System reset succesfully");
-            
+
         }
 
 
@@ -1873,14 +1892,6 @@ public class HomeDashboard extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_icNumberTextBoxFocusLost
-
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        if (bookingTable.getSelectionModel().isSelectionEmpty()) {
-            JOptionPane.showMessageDialog(homeDashboardPanel, "No record selected !");
-        } else {
-            // add edit code here
-        }
-    }//GEN-LAST:event_jButton17ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1924,7 +1935,6 @@ public class HomeDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

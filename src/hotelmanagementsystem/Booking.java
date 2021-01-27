@@ -117,7 +117,7 @@ public class Booking implements IOProcess{
             bookingDetailsWriter.close();
             System.out.println("Successfully wrote to booking file.");
             
-            // Creating a new booking file and writing details to it 
+            // Creating a new guest file and writing details to it 
             FileWriter guestDetailsWriter = new FileWriter(guestfilename);
             guestDetailsWriter.write(ic_number + "\n" + customer_name + "\n" + email + "\n" + contact_number);
             guestDetailsWriter.close();

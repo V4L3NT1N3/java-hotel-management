@@ -8,4 +8,6 @@ package hotelmanagementsystem;
 public interface IOProcess {
     void deleteRecord();
     void EditRecord();
+    
+    String currentDirectory = System.getProperty("user.dir");
 }
