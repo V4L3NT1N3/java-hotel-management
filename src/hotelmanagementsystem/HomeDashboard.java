@@ -117,40 +117,6 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     }
 
-    public void loadTableContents() {
-
-        // Get file names of each booking in the booking directory 
-        String[] existingBookingsDirectory = enumerateBookings();
-        int i;
-
-        // Clearing existing table contents first ( otherwise they stack up )
-        DefaultTableModel model = (DefaultTableModel) bookingTable.getModel();
-        model.setRowCount(0);
-
-        // Loop through each booking file's contents
-        for (i = 0; i < existingBookingsDirectory.length; i++) {
-            String[] filedata = readBooking(existingBookingsDirectory[i]);
-            model.addRow(filedata);
-        }
-    }
-
-    public void loadTableContents(String name) {
-
-        // Get file names of each booking in the booking directory 
-        String[] existingBookingsDirectory = enumerateBookings();
-        int i;
-
-        // Clearing existing table contents first ( otherwise they stack up )
-        DefaultTableModel model = (DefaultTableModel) paymentTable.getModel();
-        model.setRowCount(0);
-
-        // Loop through each booking file's contents
-        for (i = 0; i < existingBookingsDirectory.length; i++) {
-            String[] filedata = readBooking(existingBookingsDirectory[i]);
-            model.addRow(filedata);
-        }
-    }
-
     public void fillGuestInformation(String ic_number) {
 
         String currentDirectory = System.getProperty("user.dir");
@@ -1472,9 +1438,20 @@ public class HomeDashboard extends javax.swing.JFrame {
 
     private void reservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationsButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "reservationsCard");
+        
+        // Get file names of each booking in the booking directory 
+        String[] existingBookingsDirectory = enumerateBookings();
+        int i;
 
-        loadTableContents();
+        // Clearing existing table contents first ( otherwise they stack up )
+        DefaultTableModel model = (DefaultTableModel) bookingTable.getModel();
+        model.setRowCount(0);
 
+        // Loop through each booking file's contents
+        for (i = 0; i < existingBookingsDirectory.length; i++) {
+            String[] filedata = readBooking(existingBookingsDirectory[i]);
+            model.addRow(filedata);
+        }
     }//GEN-LAST:event_reservationsButtonActionPerformed
 
     private void guestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestButtonActionPerformed
@@ -1487,7 +1464,19 @@ public class HomeDashboard extends javax.swing.JFrame {
     private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
         cardLayout.show(homeDashboardPanel, "paymentCard");
 
-        loadTableContents("Payment");
+        // Get file names of each booking in the booking directory 
+        String[] existingBookingsDirectory = enumerateBookings();
+        int i;
+
+        // Clearing existing table contents first ( otherwise they stack up )
+        DefaultTableModel model = (DefaultTableModel) paymentTable.getModel();
+        model.setRowCount(0);
+
+        // Loop through each booking file's contents
+        for (i = 0; i < existingBookingsDirectory.length; i++) {
+            String[] filedata = readBooking(existingBookingsDirectory[i]);
+            model.addRow(filedata);
+        }
     }//GEN-LAST:event_paymentButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed

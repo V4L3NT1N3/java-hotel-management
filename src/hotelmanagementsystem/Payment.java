@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public class Payment {
+public class Payment extends Booking {
 String bookingID;
 
     public Payment(String booking_ID) {
@@ -47,9 +47,4 @@ String bookingID;
         Files.move(source, destination, StandardCopyOption.REPLACE_EXISTING);
     }
 
-    static void editRecord() {
-
-        String currentDirectory = System.getProperty("user.dir");
-
-    }
 }
