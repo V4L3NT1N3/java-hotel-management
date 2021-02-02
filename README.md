@@ -23,7 +23,7 @@ A day-stay based hotel management system , built on Java and its [Swing GUI tool
 
 ## Getting Started 
 1. Git clone this this project </br>`$ git clone https://github.com/V4L3NT1N3/java-hotel-management.git`
-2. Open the project on Eclipse/Netbeans and run 'HomeDashboard.java'
+2. Open the project on Eclipse/Netbeans and run `HomeDashboard.java` under src > hotelmanagementsystem 
 
 ## Bugfixes 
 - [ ] Leading zeros are inadvertently removed from contact numbers
