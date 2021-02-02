@@ -22,9 +22,8 @@ A day-stay based hotel management system , built on Java and its [Swing GUI tool
 </p>
 
 ## Getting Started 
-1. Git clone this this project 
-`$ git clone https://github.com/V4L3NT1N3/rapidklmobileapp.git`
-2.
+1. Git clone this this project </br>`$ git clone https://github.com/V4L3NT1N3/java-hotel-management.git`
+2. Open the project on Eclipse/Netbeans and run 'HomeDashboard.java'
 
 ## Bugfixes 
 - [ ] Leading zeros are inadvertently removed from contact numbers
